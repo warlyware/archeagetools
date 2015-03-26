@@ -9,6 +9,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.3/angular-filter.min.js"></script>
 	<!-- Firebase -->
 	<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
 	<!-- AngularFire -->
@@ -21,9 +22,12 @@
 
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/tlm.css">
 
 </head>
-	<h1 class="text-center">Setting up a seed project...</h1>
+	<nav id="mainnav" ng-controller="HomeCtrl" ng-include="'views/nav.html'"></nav>
+	
+	<h1 class="text-center">ArcheAge Tools</h1>
 	<body>
 		<div ui-view></div>
 

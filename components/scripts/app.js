@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router', 'appCtrl', 'firebase']);
+var myApp = angular.module('myApp', ['ui.router', 'appCtrl', 'firebase', 'timer', 'angular.filter']);
 
 var appCtrl = angular.module('appCtrl', ['firebase'])
 	.constant('FIREBASE_URL', 'https://wixiw.firebaseio.com/');
@@ -6,7 +6,7 @@ var appCtrl = angular.module('appCtrl', ['firebase'])
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("/home");
+	$urlRouterProvider.otherwise("/tlm");
 
 	// States
 	$stateProvider
@@ -14,5 +14,21 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		url: '/home',
 		controller: 'HomeCtrl',
 		templateUrl: 'views/home.html'
+	})
+    .state('login', {
+		url: '/login',
+		controller: 'RegistrationCtrl',
+		templateUrl: 'views/login.html'
+	})
+    .state('tlm', {
+		url: '/tlm',
+		controller: 'RegistrationCtrl',
+		templateUrl: 'views/tlm.html'
+	})	
+    .state('properties', {
+		url: '/properties',
+		controller: 'PropCtrl',
+		templateUrl: 'views/properties.html'
 	});
+	
 }]);

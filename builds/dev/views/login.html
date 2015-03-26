@@ -1,0 +1,17 @@
+<section class="login">
+	<form name="waterform" novalidate ng-submit="login()">
+		<h1>login</h1>
+
+		<p class="error formerror" ng-show="message">{{message}}</p>
+		<p class="error formerror" ng-show="regMessage">{{message}}</p>
+
+
+		
+		<input type="email" name="email" placeholder="email" autofocus ng-model="user.email" ng-required="true">
+		<p class="error validationerror" ng-show="waterform.email.$invalid && waterform.email.$touched">valid email required</p>
+		<input type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
+		<p class="error validationerror" ng-show="waterform.password.$invalid && waterform.password.$touched">password required</p>
+		<button type="submit" class="btn" ng-disabled="wateform.$invalid">login</button>
+
+	</form>
+</section>
