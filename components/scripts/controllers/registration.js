@@ -2,7 +2,7 @@
 //# /controllers/registration.js #
 //################################
 
-myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebase', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebase, $firebaseAuth, $location, $state, Authentication, FIREBASE_URL) {
+myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
 	
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref);
@@ -16,10 +16,14 @@ myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebase', '$fir
 		});
 	}
 
-	
 	$scope.register = function() {
-		alert($scope.user.email)
-		$location.path('/properties');
+		Authentication.register($scope.user)
+			.then(function(user) {
+				Authentication.login($scope.user);
+				$location.path('/properties');
+			}).catch(function(error) {
+				$scope.regMessage = error.message;
+			});
 	}
 	
 	

@@ -19,9 +19,20 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 	})
     .state('login', {
 		url: '/login',
+		resolve: {
+			Authentication: 'Authentication'
+		},
 		controller: 'RegistrationCtrl',
 		templateUrl: 'views/login.html'
 	})
+    .state('register', {
+		url: '/register',
+		resolve: {
+			Authentication: 'Authentication'
+		},
+		controller: 'RegistrationCtrl',
+		templateUrl: 'views/register.html'
+	})	
     .state('tlm', {
 		url: '/tlm',
 		controller: 'RegistrationCtrl',
@@ -32,51 +43,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		controller: 'PropCtrl',
 		templateUrl: 'views/properties.html'
 	});
-	
-}]);
-var test = function() {
-	console.log("this is a test!");
-}
-
-test();
-//########################
-//# /controllers/home.js #
-//########################
-
-myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$firebase', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $firebase, $state, $stateParams, FIREBASE_URL) {
-
-}]);
-//##############################
-//# /controllers/properties.js #
-//##############################
-
-myApp.controller('PropCtrl', ['$scope', '$rootScope', '$firebase', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $firebase, $state, $stateParams, FIREBASE_URL) {
-	
-}]);
-//################################
-//# /controllers/registration.js #
-//################################
-
-myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebase', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebase, $firebaseAuth, $location, $state, Authentication, FIREBASE_URL) {
-	
-	var ref = new Firebase(FIREBASE_URL);
-	var auth = $firebaseAuth(ref);
-	
-	$scope.login = function() {
-		Authentication.login($scope.user)
-		.then(function(user) {
-			$location.path('/properties');
-		}).catch(function(error) {
-			$scope.message = error.message;
-		});
-	}
-
-	
-	$scope.register = function() {
-		alert($scope.user.email)
-		$location.path('/properties');
-	}
-	
 	
 }]);
 /**
@@ -3131,11 +3097,55 @@ var timerModule=angular.module("timer",[]).directive("timer",["$compile",functio
     }
 }).call(this);
 
+//########################
+//# /controllers/home.js #
+//########################
+
+myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+
+}]);
+//##############################
+//# /controllers/properties.js #
+//##############################
+
+myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+	
+}]);
+//################################
+//# /controllers/registration.js #
+//################################
+
+myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
+	
+	var ref = new Firebase(FIREBASE_URL);
+	var auth = $firebaseAuth(ref);
+	
+	$scope.login = function() {
+		Authentication.login($scope.user)
+		.then(function(user) {
+			$location.path('/properties');
+		}).catch(function(error) {
+			$scope.message = error.message;
+		});
+	}
+
+	$scope.register = function() {
+		Authentication.register($scope.user)
+			.then(function(user) {
+				Authentication.login($scope.user);
+				$location.path('/properties');
+			}).catch(function(error) {
+				$scope.regMessage = error.message;
+			});
+	}
+	
+	
+}]);
 //###############################
 //# /services/authentication.js #
 //###############################
 
-myApp.factory('Authentication', ['$firebase', '$firebaseAuth', '$location', 'FIREBASE_URL', function($firebase, $firebaseAuth, $location, FIREBASE_URL) {
+myApp.factory('Authentication', ['$firebaseAuth', '$location', 'FIREBASE_URL', function($firebaseAuth, $location, FIREBASE_URL) {
 	
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref); 
@@ -3147,9 +3157,25 @@ myApp.factory('Authentication', ['$firebase', '$firebaseAuth', '$location', 'FIR
 				email: user.email,
 				password: user.password
 			});
+		},
+
+		register: function(user) {
+			return auth.$createUser({
+				email: user.email,
+				password: user.password
+			}).then(function(regUser) {
+				var firebaseUsers = new Firebase(FIREBASE_URL + 'testusers');
+				firebaseUsers.child('/' + regUser.uid).set({
+					created: Firebase.ServerValue.TIMESTAMP,
+					userID: regUser.uid,
+					mainChar: user.mainChar,
+					email: user.email
+				});
+			});
 		}
-		
 	}
+
+	return myObject;
 }]);
 }).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])

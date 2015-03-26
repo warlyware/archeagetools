@@ -2,7 +2,7 @@
 //# /services/authentication.js #
 //###############################
 
-myApp.factory('Authentication', ['$firebase', '$firebaseAuth', '$location', 'FIREBASE_URL', function($firebase, $firebaseAuth, $location, FIREBASE_URL) {
+myApp.factory('Authentication', ['$firebaseAuth', '$location', 'FIREBASE_URL', function($firebaseAuth, $location, FIREBASE_URL) {
 	
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref); 
@@ -14,7 +14,23 @@ myApp.factory('Authentication', ['$firebase', '$firebaseAuth', '$location', 'FIR
 				email: user.email,
 				password: user.password
 			});
+		},
+
+		register: function(user) {
+			return auth.$createUser({
+				email: user.email,
+				password: user.password
+			}).then(function(regUser) {
+				var firebaseUsers = new Firebase(FIREBASE_URL + 'testusers');
+				firebaseUsers.child('/' + regUser.uid).set({
+					created: Firebase.ServerValue.TIMESTAMP,
+					userID: regUser.uid,
+					mainChar: user.mainChar,
+					email: user.email
+				});
+			});
 		}
-		
 	}
+
+	return myObject;
 }]);

@@ -17,9 +17,20 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 	})
     .state('login', {
 		url: '/login',
+		resolve: {
+			Authentication: 'Authentication'
+		},
 		controller: 'RegistrationCtrl',
 		templateUrl: 'views/login.html'
 	})
+    .state('register', {
+		url: '/register',
+		resolve: {
+			Authentication: 'Authentication'
+		},
+		controller: 'RegistrationCtrl',
+		templateUrl: 'views/register.html'
+	})	
     .state('tlm', {
 		url: '/tlm',
 		controller: 'RegistrationCtrl',

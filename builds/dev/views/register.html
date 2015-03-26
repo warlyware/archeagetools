@@ -1,22 +1,16 @@
-<section class="register">
+<section>
 	<form name="waterform" novalidate ng-submit="register()">
-		<h1>registration</h1>
+		<h1>register</h1>
 
-		<p class="error formerror" ng-show="message">{{message}}</p>
+		<p class="bg-danger" ng-show="regMessage">{{message}}</p>
 
-
-		<input type="text" name="mainChar" placeholder="main character name" autofocus ng-model="user.mainChar" ng-required="true">
-		<p class="error validationerror" ng-show="waterform.mainchar.$invalid && waterform.mainchar.$touched">main character name required</p>
-
-		<input type="email" name="email" placeholder="email" ng-model="user.email" ng-required="true">
-		<p class="error validationerror" ng-show="waterform.email.$invalid && waterform.email.$touched">valid email required</p>
-
+		<input type="email" name="email" placeholder="email" autofocus ng-model="user.email" ng-required="true">
+		<p class="bg-danger" ng-show="waterform.email.$invalid && waterform.email.$touched">valid email required</p>
 		<input type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
-		<p class="error validationerror" ng-show="waterform.password.$invalid && waterform.password.$touched">password required</p>
-
-
-
-		<button type="submit" class="btn" ng-disabled="wateform.$invalid">register</button>
+		<p class="bg-danger" ng-show="waterform.password.$invalid && waterform.password.$touched">password required</p>
+		<input type="text" name="mainChar" placeholder="main character name" ng-model="user.mainChar" ng-required="true">
+		<p class="bg-danger" ng-show="waterform.mainChar.$invalid && waterform.password.$touched">main character name required</p>
+		<button type="submit" class="btn btn-primary" ng-disabled="wateform.$invalid">register</button>
 
 	</form>
 </section>
