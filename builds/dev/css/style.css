@@ -1,21 +1,39 @@
 .navbar-brand {
+	padding-top: 20px;
 	height: 20px;
+	font-size: 2em;
 }
 
 body {
 	background-color: white;
 }
 
+ul.alerts {
+	padding: 0;
+	margin: 0;
+}
+
+.alerts > li {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
 .alerts {
-	/*width: 20%;*/
+	list-style-type: none;
 }
 
-.login-form {
-	text-align: center;
-	margin: auto;
-	width: 50%;
+.icon-size {
+	height: 30px;
+	width: 30px;
 }
 
+.login {
+	width: 40%;
+}
+
+.login input {
+
+}
 
 .reg-form {
 	text-align: center;

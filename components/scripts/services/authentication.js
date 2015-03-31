@@ -33,7 +33,7 @@ myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject
 				email: user.email,
 				password: user.password
 			}).then(function(regUser) {
-				var firebaseUsers = new Firebase(FIREBASE_URL + 'testusers');
+				var firebaseUsers = new Firebase(FIREBASE_URL + 'users');
 				firebaseUsers.child('/' + regUser.uid).set({
 					created: Firebase.ServerValue.TIMESTAMP,
 					userID: regUser.uid,
@@ -41,7 +41,11 @@ myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject
 					email: user.email
 				});
 			});
+		},
+		logout: function(user) {
+			return auth.$unauth();
 		}
+		
 	}
 
 	return myObject;

@@ -27,9 +27,9 @@
 		<div id="mainnav" ng-controller="HomeCtrl" ng-include="'views/nav.html'"></div>
 
 	<body>
-	
-		<h1 class="text-center">ArcheAge Tools</h1>
-		<h3 ng-show="currentUser" class="text-center">Hi {{currentUser.mainChar}}</h3>
+		<div class="userinfo" ng-controller="StatusCtrl" ng-show="currentUser">			
+			<h2 class="text-center">Hi {{currentUser.mainChar}}</h2>
+		</div>
 		<div ui-view></div>
 
 

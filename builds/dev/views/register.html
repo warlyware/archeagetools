@@ -1,13 +1,9 @@
 <div class="container">
+	<!-- Registration form	 -->
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3">
-			
 			<form name="waterform" novalidate ng-submit="register()">
-
-				<h1 class="text-center">register</h1>
-
-
-
+				<h3 class="text-center">register</h3>
 				<div class="form-group">
 					<!-- Form inputs -->
 					<input class="form-control" type="email" name="email" placeholder="email" autofocus ng-model="user.email" ng-required="true">
@@ -20,22 +16,18 @@
 			</form>
 		</div>
 	</div><br>
+	<!-- Alerts -->
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3 alerts">
-			<!-- Alerts -->
-<!-- 			<div class="col-xs-6">
-				<alert type="'danger'" ng-show="regMessage">{{message}}</alert>
-			</div> -->
-			<div class="col-xs-3">
-				<alert type="'danger'" ng-show="waterform.email.$invalid && waterform.email.$touched">valid email required</alert>
-			</div>
-			<div class="col-xs-3">				
-				<alert type="'danger'" ng-show="waterform.password.$invalid && waterform.password.$touched">password required</alert>
-			</div>
-			<div class="col-xs-6">							
-				<alert type="'danger'" ng-show="waterform.mainChar.$invalid && waterform.mainChar.$touched">main character name required</alert>
+			<div class="col-xs-12">
+				<alert type="'danger'" ng-show="waterform.email.$invalid && waterform.email.$touched || waterform.password.$invalid && waterform.password.$touched || waterform.mainChar.$invalid && waterform.mainChar.$touched">
+					<ul class="alerts">
+						<li class="text-center" ng-show="waterform.email.$invalid && waterform.email.$touched"> valid email address required </li>
+						<li class="text-center" ng-show="waterform.password.$invalid && waterform.password.$touched"> password required </li>
+						<li class="text-center" ng-show="waterform.mainChar.$invalid && waterform.mainChar.$touched"> main character name required </li>
+					</ul>
+				</alert>
 			</div>
 		</div>
 	</div>
-
 </div>
