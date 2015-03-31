@@ -17,6 +17,7 @@ var env,
 	jsSrc,
 	dataSrc,
 	htmlSrc,
+	viewsSrc,
 	lessSrc,
 	outputDir;
 

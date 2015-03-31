@@ -1,3 +1,20 @@
 body {
 	background-color: white;
 }
+
+.alerts {
+	/*width: 20%;*/
+}
+
+.login-form {
+	text-align: center;
+	margin: auto;
+	width: 50%;
+}
+
+
+.reg-form {
+	text-align: center;
+	margin: auto;
+	width: 50%;
+}

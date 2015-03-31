@@ -2,20 +2,32 @@
 //# /services/authentication.js #
 //###############################
 
-myApp.factory('Authentication', ['$firebaseAuth', '$location', 'FIREBASE_URL', function($firebaseAuth, $location, FIREBASE_URL) {
+myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject', '$location', 'FIREBASE_URL', function($firebaseAuth, $rootScope, $firebaseObject, $location, FIREBASE_URL) {
 	
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref); 
-	
-	var myObject = {
-		
+
+	// Watch login and logout for change, update currentUser
+	auth.$onAuth(function(authUser) {
+		// Login
+		if(authUser) {
+			var ref = new Firebase(FIREBASE_URL + 'users/' + authUser.uid);
+			var user = $firebaseObject(ref);
+			$rootScope.currentUser = user;
+		// Logout
+		} else {
+			$rootScope.currentUser = '';
+		}
+	});
+
+	// Authentication functions
+	var myObject = {		
 		login: function(user) {
 			return auth.$authWithPassword({
 				email: user.email,
 				password: user.password
 			});
 		},
-
 		register: function(user) {
 			return auth.$createUser({
 				email: user.email,
