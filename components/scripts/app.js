@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router', 'appCtrl', 'firebase', 'timer', 'angular.filter']);
+var myApp = angular.module('myApp', ['ui.router', 'ui.bootstrap', 'appCtrl', 'firebase', 'timer', 'angular.filter']);
 
 var appCtrl = angular.module('appCtrl', ['firebase'])
 	.constant('FIREBASE_URL', 'https://wixiw.firebaseio.com/');

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">	
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="navbar-header">
@@ -19,3 +20,32 @@
 		</div>
 	</nav>	
 </div>
+=======
+<div class="container">
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1">
+			<nav class="navbar navbar-default" role="navigation">
+				<!-- Branding and navbar toggle -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" ng-init="navCollapsed=true" ng-click="navCollapsed=!navCollapsed">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#/" class="navbar-brand">Archeage Tools</a>
+				</div>		
+				<!-- All other navbar content -->
+				<div collapse="navCollapsed" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li ng-show="currentUser"><a ng-href="#/properties">my properties</a></li>
+						<li ng-hide="currentUser"><a ng-href="#/login">login</a></li>
+						<li ng-hide="currentUser"><a ng-href="#/login">register</a></li>
+				 		<li ng-show="currentUser"><a ng-href="#/users/{{currentUser.mainChar}}"><span>user</span></a></li>
+					</ul>
+				</div>
+			</nav>			
+		</div>
+	</div>
+</div>
+		
+>>>>>>> 3fcc1a9624f843e4d1118d226c30ead0dda52ae9
