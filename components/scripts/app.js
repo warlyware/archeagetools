@@ -6,7 +6,7 @@ var appCtrl = angular.module('appCtrl', ['firebase'])
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("/tlm");
+	$urlRouterProvider.otherwise("/properties");
 
 	// States
 	$stateProvider

@@ -8,7 +8,7 @@ var appCtrl = angular.module('appCtrl', ['firebase'])
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("/tlm");
+	$urlRouterProvider.otherwise("/properties");
 
 	// States
 	$stateProvider
@@ -43,6 +43,50 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		controller: 'PropCtrl',
 		templateUrl: 'views/properties.html'
 	});
+	
+}]);
+//########################
+//# /controllers/home.js #
+//########################
+
+myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+
+}]);
+//##############################
+//# /controllers/properties.js #
+//##############################
+
+myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+	
+}]);
+//################################
+//# /controllers/registration.js #
+//################################
+
+myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
+	
+	var ref = new Firebase(FIREBASE_URL);
+	var auth = $firebaseAuth(ref);
+	
+	$scope.login = function() {
+		Authentication.login($scope.user)
+		.then(function(user) {
+			$location.path('/properties');
+		}).catch(function(error) {
+			$scope.message = error.message;
+		});
+	}
+
+	$scope.register = function() {
+		Authentication.register($scope.user)
+			.then(function(user) {
+				Authentication.login($scope.user);
+				$location.path('/properties');
+			}).catch(function(error) {
+				$scope.regMessage = error.message;
+			});
+	}
+	
 	
 }]);
 /**
@@ -3097,50 +3141,6 @@ var timerModule=angular.module("timer",[]).directive("timer",["$compile",functio
     }
 }).call(this);
 
-//########################
-//# /controllers/home.js #
-//########################
-
-myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
-
-}]);
-//##############################
-//# /controllers/properties.js #
-//##############################
-
-myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
-	
-}]);
-//################################
-//# /controllers/registration.js #
-//################################
-
-myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
-	
-	var ref = new Firebase(FIREBASE_URL);
-	var auth = $firebaseAuth(ref);
-	
-	$scope.login = function() {
-		Authentication.login($scope.user)
-		.then(function(user) {
-			$location.path('/properties');
-		}).catch(function(error) {
-			$scope.message = error.message;
-		});
-	}
-
-	$scope.register = function() {
-		Authentication.register($scope.user)
-			.then(function(user) {
-				Authentication.login($scope.user);
-				$location.path('/properties');
-			}).catch(function(error) {
-				$scope.regMessage = error.message;
-			});
-	}
-	
-	
-}]);
 //###############################
 //# /services/authentication.js #
 //###############################

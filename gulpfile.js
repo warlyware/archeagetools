@@ -103,7 +103,11 @@ gulp.task('watch', function() {
 gulp.task('connect', function() {
 	connect.server({
 		root: outputDir,
-		livereload: true
+		host: '0.0.0.0',
+		livereload: {
+			enabled: true,
+			port: '4002'			
+		}
 	});
 });
 
