@@ -2,7 +2,7 @@ myApp.controller('StatusCtrl', ['$scope', '$rootScope', '$location', '$state', '
 	
 	$scope.logout = function() {
 		Authentication.logout();
-		$location.path('/login');
+		$location.path('/tlm');
 	}
 
 }]);

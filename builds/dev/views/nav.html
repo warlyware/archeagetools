@@ -5,9 +5,8 @@
 				<!-- Branding and navbar toggle -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" ng-init="navCollapsed=true" ng-click="navCollapsed=!navCollapsed">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+								<img class="icon-size" src="http://i47.photobucket.com/albums/f154/uninvisible/archeage_zpscf3i0mgx.png">
+								<b class="caret"></b>
 					</button>
 					<a href="#/" class="navbar-brand">Archeage Tools</a>
 				</div>		
@@ -15,21 +14,13 @@
 				<div collapse="navCollapsed" class="collapse navbar-collapse">
 					
 
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">		
-								<img class="icon-size" src="http://i47.photobucket.com/albums/f154/uninvisible/archeage_zpscf3i0mgx.png">
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu" ng-controller="StatusCtrl">
-								<li ng-hide="currentUser"><a ng-href="#/login">login</a></li>
-								<li ng-hide="currentUser"><a ng-href="#/register">register</a></li>
-								<li ng-show="currentUser"><a ng-href="#/properties">my properties</a></li>
-								<li ng-show="currentUser"><a ng-href="#/users/{{currentUser.mainChar}}"><span>user</span></a></li>
-								<li ng-show="currentUser">	
-									<a ng-href="javascript:void(0)" ng-click="logout()">logout <span class="glyphicon glyphicon-log-out pull-right"></span></a>
-								</li>
-							</ul>
+					<ul class="nav navbar-nav navbar-right" ng-controller="StatusCtrl">
+						<li ng-hide="currentUser"><a ng-href="#/login">login</a></li>
+						<li ng-hide="currentUser"><a ng-href="#/register">register</a></li>
+						<li ng-show="currentUser"><a ng-href="#/properties">my properties</a></li>
+						<li ng-show="currentUser"><a ng-href="#/users/{{currentUser.mainChar}}"><span>user</span></a></li>
+						<li ng-show="currentUser">	
+							<a ng-href="#" ng-click="logout()">logout</a>
 						</li>
 					</ul>
 				</div>

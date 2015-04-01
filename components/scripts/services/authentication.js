@@ -44,6 +44,14 @@ myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject
 		},
 		logout: function(user) {
 			return auth.$unauth();
+		},
+		//Require authentication
+		requireAuth: function() {
+			return auth.$requireAuth();
+		},
+		//Wait for authentication
+		waitForAuth: function() {
+			return auth.$waitForAuth();
 		}
 		
 	}

@@ -13,6 +13,7 @@ myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '
 			$location.path('/properties');
 		}).catch(function(error) {
 			$scope.message = error.message;
+			console.log(error.message);
 		});
 	}
 
