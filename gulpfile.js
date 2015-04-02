@@ -104,8 +104,8 @@ gulp.task('watch', function() {
 gulp.task('connect', function() {
 	connect.server({
 		root: outputDir,
-		// host: '0.0.0.0',
-		host: 'localhost',
+		host: '0.0.0.0',
+// 		host: 'localhost',
 		livereload: {
 			enabled: true,
 			port: '4002'			
