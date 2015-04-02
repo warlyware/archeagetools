@@ -1,0 +1,56 @@
+.navbar-brand {
+	padding-top: 20px;
+	height: 20px;
+	font-size: 1.6em;
+}
+
+body {
+	background-color: white;
+}
+
+ul.alerts {
+	padding: 0;
+	margin: 0;
+}
+
+.alerts > li {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.alerts {
+	list-style-type: none;
+}
+
+.icon-size {
+	height: 30px;
+	width: 30px;
+}
+
+.login {
+	width: 40%;
+}
+
+.login input {
+
+}
+
+.reg-form {
+	text-align: center;
+	margin: auto;
+	width: 50%;
+}
+
+#prop-infobox {
+	background-color: green;
+}
+
+#prop-infobox ul {
+	list-style-type: none;
+	font-size: 1.2em;
+	padding: 0px;
+}
+
+.affix {
+	padding-top: 60px;
+}

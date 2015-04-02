@@ -19,6 +19,7 @@ var env,
 	htmlSrc,
 	viewsSrc,
 	lessSrc,
+	cssSrc,
 	outputDir;
 
 //Create environment variable
@@ -32,17 +33,17 @@ if (env === 'dev') { //If env = def, we are in dev mode
 
 // [Define sources]
 jsSrc = ['components/scripts/*.js', 'components/scripts/**/*.js'];
-dataSrc = ['componenets/data/*.json'];
-htmlSrc = ['builds/dev/*.html'];
-viewsSrc = ['builds/dev/views/*.html'];
-lessSrc = ['builds/dev/less/bootstrap.less'];
-cssSrc = ['builds/dev/css/*.css'];
+dataSrc = ['components/data/*.json'];
+indexSrc = ['components/*.html'];
+viewsSrc = ['components/views/*.html'];
+lessSrc = ['components/less/bootstrap.less'];
+cssSrc = ['components/css/*.css'];
 
 // [Gulp tasks]
 
 //Process HTML
 gulp.task('html', function() {
-	gulp.src(htmlSrc)
+	gulp.src(indexSrc)
 		.pipe(gulpif(env === 'production', minifyHTML()))  //If in production, minify...
 		.pipe(gulp.dest(outputDir))  //Place in output dir
 		.pipe(connect.reload())  //Reload page to reflect changes
