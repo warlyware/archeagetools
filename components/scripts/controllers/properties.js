@@ -59,13 +59,18 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 	}
 
 	$scope.selectProperty = function(key, property) {
-		$scope.owner = property.propowner
-		$scope.proptype = property.proptype
-		console.log(key + ', ' + property.propowner);
+		$('.timer-selected').toggleClass('timer-selected');	
+		$scope.owner = property.propowner;
+		$scope.proptype = property.proptype;
+		$scope.location = property.proplocation;
+		$scope.duedate = property.propduedate;
+		$scope.duetime = property.propduetime;
+		$scope.timertime = property.propduedateiso;
+		$timeout(function () {
+			$('#timerholder').empty();
+			$('.timer-selected').appendTo('#timerholder');
+		}, 50);
 	}	
 
-	// $timeout(function () {
-	// 	console.log("Status check!");
-	// }, 500);
 
 }]);

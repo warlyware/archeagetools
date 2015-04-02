@@ -40,3 +40,10 @@ ul.alerts {
 	margin: auto;
 	width: 50%;
 }
+
+.prop-infobox ul {
+	padding: none !important;
+	list-style-type: none;
+	font-size: 1.2em !important;
+	padding: 0px !important;
+}

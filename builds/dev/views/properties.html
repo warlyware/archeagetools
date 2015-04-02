@@ -15,22 +15,20 @@
 						
 						<span ng-if="property.propstatus == 'paid'">
 						{{property.propduedate}} at {{property.propduetime}}<br>
-						<span><timer end-time="property.propduedateiso" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
+						<span><timer ng-class="timerSelected ? 'timer-selected' : 'timer-not-selected'" end-time="property.propduedateiso" class="timer" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
 						</span>
 
 						<span ng-if="property.propstatus == 'duesoon'" class="duesoontext">
 						{{property.propduedate}} at {{property.propduetime}}<br>
-						<span><timer end-time="property.propduedateiso" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
+						<span><timer ng-class="notSelectedTimer" end-time="property.propduedateiso" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
 						</span>
 
 						<span ng-if="property.propstatus == 'overdue'" class="overduetext">{{property.propdemodateformatted}}<br>
 						<span><timer end-time="property.propdemodate">DEMOS in {{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>
 						</span>
 
-						<span>est. amount due: {{property.proptaxamount}}</span><br><br>
 
-
-						<button class="btn btn-default" ng-click="selectProperty(key,property)"><span class="glyphicon glyphicon-info-sign"></span></button>
+						<button class="btn btn-default" ng-click="timerSelected = !timerSelected; selectProperty(key,property)"><span class="glyphicon glyphicon-info-sign"></span></button>
 						<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
 							<span class="glyphicon glyphicon-trash"></span>
 						</button>
@@ -39,21 +37,21 @@
 						</button>
 					</div>
 				</div><br><br>		
-		
-		
-
-			
 		</div>
-
-
 		<!-- Selected Property Info -->
-		<div class="col-xs-3">
-			<div class="well">
+		<div class="col-xs-3" ng-show="owner">
+			<div class="well prop-infobox">
 				<ul>
-					<li>{{owner}}</li>
-					<li>{{proptype}}</li>
-				</ul>
-				
+					<li><em>Owner: </em> {{owner}}</li>
+					<li><em>Type: </em> {{proptype}}</li>
+					<li><em>Location: </em> {{location}}</li>
+					<li><em>Due: </em> {{duedate}}</li>
+					<li><em>@ </em> {{duetime}}</li>
+
+					<li>
+						<strong><div id="timerholder"></div></strong>
+					</li>
+				</ul>				
 			</div>
 		</div>
 	</div>
