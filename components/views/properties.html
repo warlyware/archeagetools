@@ -1,13 +1,15 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-9">
-			<div ng-repeat="val in properties" class="well">
-					<h2>{{val.$id}}</h2><hr width="30%">
+			<div ng-repeat="val in properties" class="well text-center">
+					<h2>{{val.$id}}</h2>
+					<hr>
 					<div id="{{key}}" ng-repeat='(key,property) in val | groupBy: property.propowner' ng-class="{'overdue' : property.propstatus == 'overdue', 'house' : property.propcategory == 'house'}">
 						<div class="property" ng-click="selectProperty(key,property)">
-							<h3>{{property.proptype}}</h3>
-							<div class="propinfo {{key}} center-text" id="prop{{key}}" ng-show="selectedProp">
-								<h3>{{property.proptype}}</h3>
+							<h4>{{property.proptype}}</h4>
+							<div class="propinfo {{key}}" id="prop{{key}}" ng-show="selectedProp">
+								<hr>
+								<h3 class="text-center">{{property.proptype}}</h3>
 								<ul>
 									<li><em>Owner: </em> {{property.propowner}}</li>
 									<li><em>Type: </em> {{property.proptype}}</li>
@@ -17,14 +19,18 @@
 									<li>
 										<timer end-time="property.propduedateiso">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer><br>
 									</li>
+									<li>
+										<div class="center-block button-wrapper">
+											<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
+											<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
+												<span class="glyphicon glyphicon-trash"></span>
+											</button>
+											<button class="btn btn-default" ng-click="payTaxes(key,property)">
+												<span class="glyphicon glyphicon-usd"></span>
+											</button>
+										</div>
+									</li>
 								</ul>
-								<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
-								<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
-									<span class="glyphicon glyphicon-trash"></span>
-								</button>
-								<button class="btn btn-default" ng-click="payTaxes(key,property)">
-									<span class="glyphicon glyphicon-usd"></span>
-								</button>
 							</div>
 						</div>
 	
@@ -41,12 +47,15 @@
 
 
 					</div>
-				</div><br><br>		
+				</div>	
 		</div>
 		<!-- Selected Property Info -->
-		<div class="col-xs-3">
-			<div id="prop-infobox" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
-			
+		<div class="col-xs-3 " id="infobox-wrapper">
+			<div id="prop-infobox-wrapper" affix>
+				<div id="prop-infobox">
+				<h3 class="text-center"><em>Hello {{currentUser.mainChar}}</em></h3>
+					
+				</div>
 			</div>
 		</div>
 	</div>

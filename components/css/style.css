@@ -41,16 +41,42 @@ ul.alerts {
 	width: 50%;
 }
 
+
 #prop-infobox {
-	background-color: green;
+	border-radius: 12px;
+	background-color: #7eb68d;
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 12px
 }
 
 #prop-infobox ul {
+	line-height: 2em;
+	padding-left: 50px;
 	list-style-type: none;
 	font-size: 1.2em;
-	padding: 0px;
 }
 
-.affix {
-	padding-top: 60px;
+#prop-infobox-wrapper {
+}
+
+#infobox-wrapper {
+	padding-left: 0px;
+}
+
+.property {
+	display: inline-block;
+}
+
+.property:hover {
+	cursor: pointer;
+}
+
+hr { 
+	display: block; 
+	height: 1px;
+    border: 0; 
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
 }

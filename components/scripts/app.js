@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router', 'ui.bootstrap', 'uiRouterStyles', 'appCtrl', 'firebase', 'timer', 'angular.filter']);
+var myApp = angular.module('myApp', ['ui.router', 'ui.bootstrap', 'uiRouterStyles', 'appCtrl', 'firebase', 'timer', 'angular.filter', 'ngScrollSpy']);
 
 var appCtrl = angular.module('appCtrl', ['firebase'])
 	.constant('FIREBASE_URL', 'https://wixiw.firebaseio.com/');
@@ -21,11 +21,6 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 
 	// States
 	$stateProvider
-    .state('home', {
-		url: '/home',
-		controller: 'HomeCtrl',
-		templateUrl: 'views/home.html'
-	})
     .state('login', {
 		url: '/login',
 		resolve: {

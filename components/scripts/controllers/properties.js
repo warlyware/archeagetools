@@ -18,7 +18,7 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 
 	// add responsiveness to affixed infobox
 	$(function() {
-		var $affixElement = $('div[data-spy="affix"]');
+		var $affixElement = $('div[affix]');
 		$affixElement.width($affixElement.parent().width());
 	});
 
