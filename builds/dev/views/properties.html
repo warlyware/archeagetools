@@ -4,50 +4,48 @@
 			<div ng-repeat="val in properties" class="well text-center">
 					<h2>{{val.$id}}</h2>
 					<hr>
-					<div id="{{key}}" ng-repeat='(key,property) in val | groupBy: property.propowner' ng-class="{'overdue' : property.propstatus == 'overdue', 'house' : property.propcategory == 'house'}">
-						<div class="property" ng-click="selectProperty(key,property)">
-							<h4>{{property.proptype}}</h4>
-							<div class="propinfo {{key}}" id="prop{{key}}" ng-show="selectedProp">
-								<hr>
-								<h3 class="text-center">{{property.proptype}}</h3>
-								<ul>
-									<li><em>Owner: </em> {{property.propowner}}</li>
-									<li><em>Type: </em> {{property.proptype}}</li>
-									<li><em>Location: </em> {{property.proplocation}}</li>
-									<li><em>Due: </em> {{property.propduedate}}</li>
-									<li><em>@ </em> {{property.propduetime}}</li>
-									<li>
-										<timer end-time="property.propduedateiso">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer><br>
-									</li>
-									<li>
-										<div class="center-block button-wrapper">
-											<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
-											<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
-												<span class="glyphicon glyphicon-trash"></span>
-											</button>
-											<button class="btn btn-default" ng-click="payTaxes(key,property)">
-												<span class="glyphicon glyphicon-usd"></span>
-											</button>
-										</div>
-									</li>
-								</ul>
-							</div>
+					<div id="{{key}}" class="property" ng-click="selectProperty(key,property)" ng-repeat='(key,property) in val | groupBy: property.propowner' ng-class="{'overdue' : property.propstatus == 'overdue', 'house' : property.propcategory == 'house'}">
+					<img src="img/{{property.icon}}.png" height="100px" width="100px">
+						<div class="propinfo {{key}}" id="prop{{key}}" ng-show="selectedProp">
+							<hr>
+							<h3 class="text-center">{{property.proptype}}</h3>
+							<ul>
+								<li><em>Owner: </em> {{property.propowner}}</li>
+								<li><em>Type: </em> {{property.proptype}}</li>
+								<li><em>Location: </em> {{property.proplocation}}</li>
+								<li><em>Due: </em> {{property.propduedate}}</li>
+								<li><em>@ </em> {{property.propduetime}}</li>
+								<li>
+									<timer end-time="property.propduedateiso">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer><br>
+								</li>
+								<li>
+									<div class="center-block button-wrapper">
+										<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
+										<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+										<button class="btn btn-default" ng-click="payTaxes(key,property)">
+											<span class="glyphicon glyphicon-usd"></span>
+										</button>
+									</div>
+								</li>
+							</ul>
 						</div>
-	
-						
+
+
 <!-- 						<span ng-if="property.propstatus == 'duesoon'" class="duesoontext">
-						{{property.propduedate}} at {{property.propduetime}}<br>
-						<span><timer ng-class="notSelectedTimer" end-time="property.propduedateiso" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
-						</span>
+					{{property.propduedate}} at {{property.propduetime}}<br>
+					<span><timer ng-class="notSelectedTimer" end-time="property.propduedateiso" max-time-unit="'day'">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>					
+					</span>
 
-						<span ng-if="property.propstatus == 'overdue'" class="overduetext">{{property.propdemodateformatted}}<br>
-						<span><timer end-time="property.propdemodate">DEMOS in {{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>
-						</span> -->
+					<span ng-if="property.propstatus == 'overdue'" class="overduetext">{{property.propdemodateformatted}}<br>
+					<span><timer end-time="property.propdemodate">DEMOS in {{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span><br>
+					</span> -->
 
 
 
-					</div>
-				</div>	
+				</div>
+			</div>	
 		</div>
 		<!-- Selected Property Info -->
 		<div class="col-xs-3 " id="infobox-wrapper">

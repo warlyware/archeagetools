@@ -66,11 +66,33 @@ ul.alerts {
 
 .property {
 	display: inline-block;
+	-webkit-transition: all 0.30s ease-in-out;
+	-moz-transition: all 0.30s ease-in-out;
+	-ms-transition: all 0.30s ease-in-out;
+	-o-transition: all 0.30s ease-in-out;
+	outline: none;
+	padding: 3px 5px 3px 5px;
+	margin: 5px 10px 3px 10px;
+	border: 1px solid rgba(0, 0, 0, 0);	
+	background-color: #7eb68d;
+	border-radius: 30px;	
 }
 
 .property:hover {
 	cursor: pointer;
+	box-shadow: 0 0 5px #7eb68d;
+	border: 1px solid #7eb68d;	
 }
+
+.selectedProperty, .selectedProperty:hover  {
+	display: inline-block;
+	box-shadow: 0 0 10px 5px #87C397;
+	padding: 3px 5px 3px 5px;
+	margin: 5px 10px 3px 10px;
+	border: 1px solid #7eb68d;
+}
+
+
 
 hr { 
 	display: block; 

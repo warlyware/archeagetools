@@ -97,7 +97,7 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 
 				whichPropObj.$save()
 				.then(function () {
-				console.log('paid, checking status');
+					console.log('paid, checking status');
 					$timeout(function () {						
 						statusCheck();
 					}, 500);
@@ -113,13 +113,43 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 
 	}
 
+	$scope.deleteProperty = function(key, property) {
+		var r = confirm('press OK to delete property');
+		if (r == true) {
+
+			var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/properties/' + property.propowner + '/' + key + '/');
+			var whichPropObj = $firebaseObject(ref);
+
+			whichPropObj.$loaded().then(function() {
+
+				whichPropObj.$remove()
+				.then(function () {
+					console.log('property removed');
+				});				
+				
+
+				console.log(key, property);
+
+			});
+
+
+		}
+		
+	}
+	
     $scope.selectProperty = function(key, property) {
+		
+		var $elementHome = $('#' + key);
+		
 		if ($('.currentElm')[0]){  // if div exists with class currentElm...
-			var elmID = $('.currentElm').attr('id').substring(4); // get ID of currentElm
-			$('.currentElm').appendTo('#' + elmID); // reattach currentElm to previous spot
+			var $oldElementHome = $('.currentElm').attr('id').substring(4); // get ID of currentElm
+			$('.currentElm').appendTo('#' + $oldElementHome); // reattach currentElm to previous spot
+			$('#' + $oldElementHome).removeClass('selectedProperty');
 			$('.currentElm').removeClass('currentElm').addClass('ng-hide'); // remove class currentElm and hide
+			$elementHome.addClass('selectedProperty');
 		} else {
 			console.log('Adding 1st property');
+			$elementHome.addClass('selectedProperty');			
 		}
 // 		if (currentElm) {
 // 			var elmLocation = $(currentElm).attr('id').substring(4);
@@ -131,11 +161,10 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
         
 //        $(currentElm).appendTo();
 // 		}
-		var $newElm = $('.' + key), // grab selected property (newElm) by the key in classname
-			$clone = $newElm.clone(true, true);
+		var $newElm = $('.' + key); // grab selected property (newElm) by the key in classname
+				
 		$newElm.appendTo('#prop-infobox'); // append newElm to infobox
 		$newElm.addClass('currentElm').removeClass('ng-hide'); // add currentElm class to newElm
-		console.log('Added: ' + elmID);
 
 	} 
 }]);
