@@ -70,16 +70,21 @@ myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 //# /controllers/properties.js #
 //##############################
 
-myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$firebaseObject', '$firebaseArray', '$timeout', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $timeout, FIREBASE_URL) {
+myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScope', '$state', '$stateParams', '$firebaseObject', '$firebaseArray', '$timeout', 'FIREBASE_URL', function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $timeout, FIREBASE_URL) {
 
 
     var userID = $rootScope.currentUser.$id;
 
     var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/properties');
     var propertiesArr = $firebaseArray(ref);
-
+	
+	var charRef = new Firebase(FIREBASE_URL + '/users/' + userID + '/characters/'); 
+	var charArr = $firebaseArray(charRef);
+	
+	
     $scope.properties = propertiesArr;
-
+	$scope.characters = charArr;
+	
     propertiesArr.$loaded().then(function() {
       statusCheck();
     });
@@ -90,6 +95,14 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 		$affixElement.width($affixElement.parent().width());
 	});
 
+	// Initialize infobox
+	$scope.status = {
+		isFirstOpen: false
+	};
+	$scope.topBoxCollapsed = true;
+	
+	// [Functions]	
+	// Status Check
     var statusCheck = function() {
 		console.log("Status check starting...");
 		angular.forEach(propertiesArr, function (property, key) {
@@ -128,9 +141,9 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 			});
 		});
       console.log("Checked!");
-
 	}
-
+	
+	//Pay taxes on property
 	$scope.payTaxes = function(key,property) { 
 
 		var r = confirm('press OK to pay taxes');
@@ -181,6 +194,7 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 
 	}
 
+	//Delete property
 	$scope.deleteProperty = function(key, property) {
 		var r = confirm('press OK to delete property');
 		if (r == true) {
@@ -205,9 +219,11 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 		
 	}
 	
+	// Select property
     $scope.selectProperty = function(key, property) {
 		
 		var $elementHome = $('#' + key);
+		$scope.status.propInfo = true;
 		
 		if ($('.currentElm')[0]){  // if div exists with class currentElm...
 			var $oldElementHome = $('.currentElm').attr('id').substring(4); // get ID of currentElm
@@ -219,22 +235,69 @@ myApp.controller('PropCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 
 			console.log('Adding 1st property');
 			$elementHome.addClass('selectedProperty');			
 		}
-// 		if (currentElm) {
-// 			var elmLocation = $(currentElm).attr('id').substring(4);
-// 			console.log(elmLocation);
-// 			$(currentElm).removeClass('currentElm');
-//        $(currentElm).removeClass('currentElm');
-//        var holderID = $(currentElm).attr('id');
-//        console.log(holderID);
-        
-//        $(currentElm).appendTo();
-// 		}
+
 		var $newElm = $('.' + key); // grab selected property (newElm) by the key in classname
 				
 		$newElm.appendTo('#prop-infobox'); // append newElm to infobox
 		$newElm.addClass('currentElm').removeClass('ng-hide'); // add currentElm class to newElm
-
+		
 	} 
+	
+	//Go to topbox
+	$scope.goToTopBox = function() {
+		if (!$scope.topBoxCollapsed) {
+			$location.hash('topboxgoto');
+			$anchorScroll();			
+		}
+	}
+	
+	
+	$scope.addProperty = function() { // add addProperty() to scope
+
+		var compiledDuedate = '2015-'+$scope.propduemonth+'-'+$scope.propdueday+'T'+$scope.propduehour+':'+$scope.propduemin+':'+'00';
+
+		var duedate = moment(compiledDuedate).local();
+		var duedateunix = moment(duedate).unix();
+		var duedateiso = moment(duedate).toISOString();
+		var duedatestring = duedateunix.toString();
+
+		var compiledMomentDate = moment(duedate).format("ddd, MMM Do");
+		var compiledMomentTime = moment(duedate).format("h:mm a");
+
+		var compiledMomentDateString = compiledMomentDate.toString();
+		var compiledMomentTimeString = compiledMomentTime.toString();
+
+		var ref = new Firebase(FIREBASE_URL + '/users/' + userID + '/properties/' + $scope.propowner);
+		var saveLocation = $firebaseArray(ref);
+
+			saveLocation.$save({ // push info below as object to db
+					propowner: $scope.propowner,
+					howmanypacks: 0,
+					proplocation: $scope.proplocation,
+					proptaxamount: $scope.proptaxamount,
+					propduedate: compiledMomentDateString,
+					propduemoment: duedatestring,
+					propduedateiso: duedateiso,
+					propduetime: compiledMomentTimeString,
+					propstatus: 'paid',
+					proptype: $scope.proptype,
+					propcategory: $scope.proptypes,
+					user: userID,
+					created: Firebase.ServerValue.TIMESTAMP
+			})
+			.then(function() { // once data is saved to db...
+				console.log('added, checking status');
+				$timeout(function () {						
+					statusCheck();
+				}, 500);
+			});
+
+
+	}// add property	
+	
+	
+	
+
 }]);
 //############################
 //# /controllers/redirect.js #

@@ -1,3 +1,9 @@
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Cinzel Decorative';
+    text-shadow: none;
+}
+
+
 .navbar-brand {
 	padding-top: 20px;
 	height: 20px;
@@ -43,24 +49,37 @@ ul.alerts {
 
 
 #prop-infobox {
-	border-radius: 12px;
-	background-color: #7eb68d;
-	color: white;
-	padding-top: 5px;
-	padding-bottom: 12px
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
 }
 
 #prop-infobox ul {
 	line-height: 2em;
-	padding-left: 50px;
+	padding-left: 20px;
 	list-style-type: none;
-	font-size: 1.2em;
+	font-size: 1.1em;
+	background-color: #7eb68d;
 }
 
-#prop-infobox-wrapper {
+#user-infobox ul {
+	line-height: 2em;
+	padding-left: 20px;
+	list-style-type: none;
+	font-size: 1.1em;
+	background-color: #7eb68d;
+}
+
+.button-group {
+	padding-bottom: 25px;
 }
 
 #infobox-wrapper {
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
+	background-color: #7eb68d;
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 12px
 	padding-left: 0px;
 }
 
@@ -86,7 +105,7 @@ ul.alerts {
 
 .selectedProperty, .selectedProperty:hover  {
 	display: inline-block;
-	box-shadow: 0 0 10px 5px #87C397;
+	box-shadow: 0 0 10px 5px rgba(174, 167, 25, 0.72);
 	padding: 3px 5px 3px 5px;
 	margin: 5px 10px 3px 10px;
 	border: 1px solid #7eb68d;
@@ -101,4 +120,13 @@ hr {
     border-top: 1px solid #ccc;
     margin: 1em 0;
     padding: 0; 
+}
+
+div.panel-heading, .panel {
+	padding: 0px;
+	border: none;
+}
+
+.panel-group, .panel-collapse {
+	background-color: #7eb68d;	
 }
