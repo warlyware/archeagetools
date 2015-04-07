@@ -1,13 +1,20 @@
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h5, h6, .navbar-brand, .formgroup {
 	font-family: 'Cinzel Decorative';
     text-shadow: none;
 }
 
+h4 {
+	line-height: 1.5em;
+	font-family: 'Raleway';
+	font-weight: 100;
+	text-shadow: none;
+	font-size: 1.3em;
+}
 
 .navbar-brand {
 	padding-top: 20px;
 	height: 20px;
-	font-size: 1.6em;
+	font-size: 2em;
 }
 
 body {
@@ -53,20 +60,12 @@ ul.alerts {
 	border-top-left-radius: 12px;
 }
 
-#prop-infobox ul {
-	line-height: 2em;
-	padding-left: 20px;
-	list-style-type: none;
-	font-size: 1.1em;
-	background-color: #7eb68d;
-}
-
 #user-infobox ul {
 	line-height: 2em;
 	padding-left: 20px;
 	list-style-type: none;
 	font-size: 1.1em;
-	background-color: #7eb68d;
+	background-color: #4A7C57;
 }
 
 .button-group {
@@ -76,7 +75,7 @@ ul.alerts {
 #infobox-wrapper {
 	border-top-right-radius: 12px;
 	border-top-left-radius: 12px;
-	background-color: #7eb68d;
+	background-color: #4A7C57;
 	color: white;
 	padding-top: 5px;
 	padding-bottom: 12px
@@ -97,10 +96,14 @@ ul.alerts {
 	border-radius: 30px;	
 }
 
+.property > img {
+		border-radius: 30px;	
+}
+
 .property:hover {
 	cursor: pointer;
 	box-shadow: 0 0 5px #7eb68d;
-	border: 1px solid #7eb68d;	
+	border: 1px outset #4A7C57;	
 }
 
 .selectedProperty, .selectedProperty:hover  {
@@ -108,7 +111,7 @@ ul.alerts {
 	box-shadow: 0 0 10px 5px rgba(174, 167, 25, 0.72);
 	padding: 3px 5px 3px 5px;
 	margin: 5px 10px 3px 10px;
-	border: 1px solid #7eb68d;
+	border: 1px outset #4A7C57;		
 }
 
 
@@ -128,5 +131,13 @@ div.panel-heading, .panel {
 }
 
 .panel-group, .panel-collapse {
-	background-color: #7eb68d;	
+	background-color: #4A7C57;	
+}
+
+.duesoon {
+	background-color: rgb(223, 185, 104) !important;
+}
+
+.overdue {
+	background-color: rgb(179, 35, 35) !important;
 }

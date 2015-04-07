@@ -10,7 +10,7 @@
 								<img class="icon-size" src="http://i47.photobucket.com/albums/f154/uninvisible/archeage_zpscf3i0mgx.png">
 								<b class="caret"></b>
 					</button>
-					<a href="#/" class="navbar-brand">Archeage Tools</a>
+					<a href="#/" class="navbar-brand">{{currentUser.guild || "Archeage Tools"}}</a>
 				</div>		
 				<!-- All other navbar content -->
 				<div collapse="navCollapsed" class="collapse navbar-collapse">
@@ -20,7 +20,6 @@
 						<li ng-hide="currentUser"><a ng-href="#/login">login</a></li>
 						<li ng-hide="currentUser"><a ng-href="#/register">register</a></li>
 						<li ng-show="currentUser"><a ng-href="#/properties">my properties</a></li>
-						<li ng-show="currentUser"><a ng-href="#/users/{{currentUser.mainChar}}"><span>user</span></a></li>
 						<li ng-show="currentUser">	
 							<a ng-href="#" ng-click="logout()">logout</a>
 						</li>

@@ -1,248 +1,217 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-9">
-			<div collapse="topBoxCollapsed" id="topbox">
+			<div class="well" collapse="topBoxCollapsed" id="topbox">
 				
-				<h2>add properties</h2>
+				<h3 class="text-center">add properties</h3>
 
 
-					<form class="formgroup" name="waterform" ng-submit="addProperty()" novalidate>
+					<form class="formgroup text-center" name="waterform" ng-submit="addProperty()" novalidate>
 
 						<div class="inputwrapper">
-
-							<select name="propowner" ng-model="propowner" ng-require="true" autofocus>
-								<option value="" selected>property owner</option>
+							<span>owner:</span>
+							<select required name="propowner" ng-model="propowner" autofocus>
 								<option ng-repeat="char in characters" ng-value="{{char.charname}}">{{char.charname}}</option>
 							</select>
+							
+							<span>location:</span>
+							<select required ng-model="chosenLocation" ng-options="location.name for location in locations"></select>
 
-							<select name="proplocation" ng-model="proplocation" ng-require="true">
-								<option value="" selected>property location</option>						
-								<option value="Sanddeep">Sanddeep</option>
-								<option value="Two Crowns">Two Crowns</option>
-								<option value="Lilyut Hills">Lilyut Hills</option>
-								<option value="Gweonid Forest">Gweonid Forest</option>
-								<option value="Dewstone">Dewstone</option>
-								<option value="Hellswamp">Hellswamp</option>
-								<option value="Karkasse">Karkasse</option>
-								<option value="Marianople">Marianople</option>
-							</select>
-
-							<select name="proptypes" ng-model="proptypes" ng-require="true">
-								<option value="" ng-selected>property type</option>
+							<span>type:</span>
+							<select required name="proptypes" ng-model="proptypes">
 								<option value="house">House</option>
 								<option value="farm">Farm</option>
 								<option value="workstation">Workstation</option>
 							</select>
+							
+						</div>
+						
+						<br>
+						<select id="proptypeHouse" ng-show="proptypes=='house'" ng-model="chosenProptype" ng-options="type.name for type in houseTypes"></select>
+						<select id="proptypeFarm" ng-show="proptypes=='farm'" ng-model="chosenProptype" ng-options="type.name for type in farmTypes"></select>
+						<select id="proptypeWorkstation" ng-show="proptypes=='workstation'" ng-model="chosenProptype" ng-options="type.name for type in workstationTypes"></select>
 
-							<select name="proptype" ng-model="proptype" ng-show="proptypes">
-								<option value="" selected>choose one</option>
-								<option value="Cottage" ng-if="proptypes=='house'">Cottage</option>
-								<option value="Wind-Swept Villa" ng-if="proptypes=='house'">Wind-Swept Villa</option>
-								<option value="Thatched Farmhouse" ng-if="proptypes=='house'">Thatched Farmhouse</option>
-								<option value="Swept-Roof Chalet" ng-if="proptypes=='house'">Swept-Roof Chalet</option>
-								<option value="Manor" ng-if="proptypes=='house'">Manor</option>
-								<option value="Swept-Roof Manor" ng-if="proptypes=='house'">Swept-Roof Manor</option>
-								<option value="Chalet" ng-if="proptypes=='house'">Chalet</option>
-								<option value="Breezy Bungalow" ng-if="proptypes=='house'">Breezy Bungalow</option>
-								<option value="Mansion" ng-if="proptypes=='house'">Mansion</option>
-								<option value="8x8 Scarecrow" ng-if="proptypes=='farm'">8x8 Scarecrow</option>
-								<option value="16x16 Scarecrow" ng-if="proptypes=='farm'">16x16 Scarecrow</option>
-								<option value="Aqua Farm" ng-if="proptypes=='farm'">Aqua Farm</option>
-								<option value="Gazebo" ng-if="proptypes=='farm'">Gazebo</option>
-								<option value="Private Loom" ng-if="proptypes=='workstation'">Private Loom</option>
-								<option value="Private Sawmill" ng-if="proptypes=='workstation'">Private Sawmill</option>
-								<option value="Private Masonry Table" ng-if="proptypes=='workstation'">Private Masonry Table</option>
-								<option value="Private Smelt" ng-if="proptypes=='workstation'">Private Smelt</option>
-
+						<br>
+						<h5>taxes due:</h5>	
+						<div>
+							<select required name="propduemonth" class="propduemonth" ng-model="propduemonth">
+								<option value="" selected>month</option>						
+								<option value="01">January</option>
+								<option value="02">February</option>
+								<option value="03">March</option>
+								<option value="04">April</option>
+								<option value="05">May</option>
+								<option value="06">June</option>
+								<option value="07">July</option>
+								<option value="08">August</option>
+								<option value="09">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
 							</select>
 
+							<select required name="propdueday" class="propdueday" ng-model="propdueday">
+								<option value="" selected>day</option>
+								<option value="01">1</option>
+								<option value="02">2</option>
+								<option value="03">3</option>
+								<option value="04">4</option>
+								<option value="05">5</option>
+								<option value="06">6</option>
+								<option value="07">7</option>
+								<option value="08">8</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+							</select>
 
+							@
 
+							<select required name="propduehour" class="propduehour" ng-model="propduehour">
+								<option value="" selected>h</option>
+								<option value="00">0</option>
+								<option value="01">1</option>
+								<option value="02">2</option>
+								<option value="03">3</option>
+								<option value="04">4</option>
+								<option value="05">5</option>
+								<option value="06">6</option>
+								<option value="07">7</option>
+								<option value="08">8</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+							</select>
 
+								:
+
+							<select required name="propduemin" class="propduemin" ng-model="propduemin">
+								<option value="" selected>m</option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+								<option value="32">32</option>
+								<option value="33">33</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+								<option value="36">36</option>
+								<option value="37">37</option>
+								<option value="38">38</option>
+								<option value="39">39</option>
+								<option value="40">40</option>
+								<option value="41">41</option>
+								<option value="42">42</option>
+								<option value="43">43</option>
+								<option value="44">44</option>
+								<option value="45">45</option>
+								<option value="46">46</option>
+								<option value="47">47</option>
+								<option value="48">48</option>
+								<option value="49">49</option>
+								<option value="50">50</option>
+								<option value="51">51</option>
+								<option value="52">52</option>
+								<option value="53">53</option>
+								<option value="54">54</option>
+								<option value="55">55</option>
+								<option value="56">56</option>
+								<option value="57">57</option>
+								<option value="58">58</option>
+								<option value="59">59</option>
+							</select>
 						</div>
-							<span>taxes due:</span>	
-							<div>
-								<select name="propduemonth" class="propduemonth" ng-model="propduemonth" ng-require="true">
-									<option value="" selected>month</option>						
-									<option value="01">January</option>
-									<option value="02">February</option>
-									<option value="03">March</option>
-									<option value="04">April</option>
-									<option value="05">May</option>
-									<option value="06">June</option>
-									<option value="07">July</option>
-									<option value="08">August</option>
-									<option value="09">September</option>
-									<option value="10">October</option>
-									<option value="11">November</option>
-									<option value="12">December</option>
-								</select>
-
-								<select name="propdueday" class="propdueday" ng-model="propdueday" ng-require="true">
-									<option value="" selected>day</option>
-									<option value="01">1</option>
-									<option value="02">2</option>
-									<option value="03">3</option>
-									<option value="04">4</option>
-									<option value="05">5</option>
-									<option value="06">6</option>
-									<option value="07">7</option>
-									<option value="08">8</option>
-									<option value="09">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31">31</option>
-								</select>
-
-								@
-
-								<select name="propduehour" class="propduehour" ng-model="propduehour" ng-require="true">
-									<option value="" selected>h</option>
-									<option value="00">0</option>
-									<option value="01">1</option>
-									<option value="02">2</option>
-									<option value="03">3</option>
-									<option value="04">4</option>
-									<option value="05">5</option>
-									<option value="06">6</option>
-									<option value="07">7</option>
-									<option value="08">8</option>
-									<option value="09">9</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-								</select>
-
-									:
-
-								<select name="propduemin" class="propduemin" ng-model="propduemin" ng-require="true">
-									<option value="" selected>m</option>
-									<option value="01">01</option>
-									<option value="02">02</option>
-									<option value="03">03</option>
-									<option value="04">04</option>
-									<option value="05">05</option>
-									<option value="06">06</option>
-									<option value="07">07</option>
-									<option value="08">08</option>
-									<option value="09">09</option>
-									<option value="10">10</option>
-									<option value="11">11</option>
-									<option value="12">12</option>
-									<option value="13">13</option>
-									<option value="14">14</option>
-									<option value="15">15</option>
-									<option value="16">16</option>
-									<option value="17">17</option>
-									<option value="18">18</option>
-									<option value="19">19</option>
-									<option value="20">20</option>
-									<option value="21">21</option>
-									<option value="22">22</option>
-									<option value="23">23</option>
-									<option value="24">24</option>
-									<option value="25">25</option>
-									<option value="26">26</option>
-									<option value="27">27</option>
-									<option value="28">28</option>
-									<option value="29">29</option>
-									<option value="30">30</option>
-									<option value="31">31</option>
-									<option value="32">32</option>
-									<option value="33">33</option>
-									<option value="34">34</option>
-									<option value="35">35</option>
-									<option value="36">36</option>
-									<option value="37">37</option>
-									<option value="38">38</option>
-									<option value="39">39</option>
-									<option value="40">40</option>
-									<option value="41">41</option>
-									<option value="42">42</option>
-									<option value="43">43</option>
-									<option value="44">44</option>
-									<option value="45">45</option>
-									<option value="46">46</option>
-									<option value="47">47</option>
-									<option value="48">48</option>
-									<option value="49">49</option>
-									<option value="50">50</option>
-									<option value="51">51</option>
-									<option value="52">52</option>
-									<option value="53">53</option>
-									<option value="54">54</option>
-									<option value="55">55</option>
-									<option value="56">56</option>
-									<option value="57">57</option>
-									<option value="58">58</option>
-									<option value="59">59</option>
-								</select>
-							</div>
-							<button type="submit" class="btn" ng-disabled="waterform.$invalid">add</button>
-
+						<br>
+						<button type="submit" class="btn" ng-disabled="waterform.$invalid || !chosenProptype">add</button>
 					</form>
-
+				
 			</div>
 			
 			<div ng-repeat="val in properties" class="well text-center">
 					<h2>{{val.$id}}</h2>
 					<hr>
-					<div id="{{key}}" class="property" ng-click="selectProperty(key,property)" ng-repeat='(key,property) in val | groupBy: property.propowner' ng-class="{'overdue' : property.propstatus == 'overdue', 'house' : property.propcategory == 'house'}">
+					<div id="{{key}}" class="property" ng-click="selectProperty(key,property)" ng-repeat='(key,property) in val | groupBy: property.propowner' ng-class="{'overdue' : property.propstatus == 'overdue', 'duesoon' : property.propstatus == 'duesoon'}">
 						<img ng-src="img/{{property.icon}}.png" height="100px" width="100px">
-						<h6>{{property.proptype}}</h6>
 						<div class="propinfo {{key}}" id="prop{{key}}" ng-show="selectedProp">
 							<h3 class="text-center">{{property.proptype}}</h3>
-							<ul>
-								<li><em>Owner: </em> {{property.propowner}}</li>
-								<li><em>Type: </em> {{property.proptype}}</li>
-								<li><em>Location: </em> {{property.proplocation}}</li>
-								<li><em>Due: </em> {{property.propduedate}}</li>
-								<li><em>@ </em> {{property.propduetime}}</li>
-								<li>
-									<timer end-time="property.propduedateiso">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer><br>
-								</li>
-								<li>
-									<div class="center-block button-wrapper">
-										<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
-										<button type="button" class="btn btn-default" ng-click="deleteProperty(key,property)">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-										<button class="btn btn-default" ng-click="payTaxes(key,property)">
-											<span class="glyphicon glyphicon-usd"></span>
-										</button>
-									</div>
-								</li>
-							</ul>
+							<h4 class="text-center"><em>Owner: </em> {{property.propowner}}</h4>
+							<h4 class="text-center"><em>Location: </em> {{property.proplocation}}</h4>
+							<h4 class="text-center"><em>Due: </em> {{property.propduedate}}</h4>
+							<h4 class="text-center"><em>@ </em> {{property.propduetime}}</h4>
+
+							<h4 class="text-center"><timer id="proptimer" end-time="property.propduedateiso">{{ddays}}:{{hhours}}:{{mminutes}}:{{sseconds}}</timer></h4>
+
+							
+							
+							<div class="text-center button-wrapper">
+								<button class="btn btn-default"><span class="glyphicon glyphicon-info-sign"></span></button>
+								<button type="button" class="btn btn-default" ng-click="status.propInfo=!status.propInfo; deleteProperty(key,property)">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+
+								<button class="btn btn-default" ng-click="payTaxes(key,property)">
+									<span class="glyphicon glyphicon-usd"></span>
+								</button>
+							</div>
 						</div>
 
 

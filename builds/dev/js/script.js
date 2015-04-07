@@ -59,18 +59,19 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 	});
 	
 }]);
-//########################
-//# /controllers/home.js #
-//########################
+//############################
+//# /controllers/redirect.js #
+//############################
 
-myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+myApp.controller('HomeCtrl', ['$scope', 'FIREBASE_URL', function($scope, FIREBASE_URL) {
 
+	
 }]);
 //##############################
 //# /controllers/properties.js #
 //##############################
 
-myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScope', '$state', '$stateParams', '$firebaseObject', '$firebaseArray', '$timeout', 'FIREBASE_URL', function($scope, $location, $anchorScroll, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $timeout, FIREBASE_URL) {
+myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll', '$rootScope', '$state', '$stateParams', '$firebaseObject', '$firebaseArray', '$timeout', 'FIREBASE_URL', function($scope, $compile, $location, $anchorScroll, $rootScope, $state, $stateParams, $firebaseObject, $firebaseArray, $timeout, FIREBASE_URL) {
 
 
     var userID = $rootScope.currentUser.$id;
@@ -101,6 +102,43 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 	};
 	$scope.topBoxCollapsed = true;
 	
+	//Set addProperty form options
+	$scope.houseTypes = [
+		{name: 'Cottage', type: 'house', icon: 'cottage'},
+		{name: 'Thatched Farmhouse', type: 'house', icon: 'farmhouse'},
+		{name: 'Swept-Roof Chalet', type: 'house', icon: 'srchalet'},
+		{name: 'Manor', type: 'house', icon: 'manor'},
+		{name: 'Swept-Roof Manor', type: 'house', icon: 'srmanor'},
+		{name: 'Chalet', type: 'house', icon: 'chalet'},
+		{name: 'Breezy Bungalow', type: 'house', icon: 'bungalow'},
+		{name: 'Wind-Swept Mansion', type: 'house', icon: 'wsmansion'},
+		{name: 'Mansion', type: 'house', icon: 'mansion'}
+	]
+	$scope.farmTypes = [
+		{name: '8x8 Scarecrow', type: 'farm', icon: 'scarecrowsm'},
+		{name: '16x16 Scarecrow', type: 'farm', icon: 'scarecrowlg'},
+		{name: 'Gazebo', type: 'farm', icon: 'gazebo'}
+	]
+	$scope.workstationTypes = [
+		{name: 'Private Loom', type: 'workstation', icon: 'loom'},
+		{name: 'Private Carpentry Bench', type: 'workstation', icon: 'carpentry'},
+		{name: 'Private Masonry Table', type: 'workstation', icon: 'masonry'},
+		{name: 'Private Smelter', type: 'workstation', icon: 'smelter'}
+	]
+	$scope.locations = [
+		{name: 'Two Crowns'}, 
+		{name: 'Sanddeep'}, 
+		{name: 'Marianople'},
+		{name: 'White Arden'},
+		{name: 'Dewstone'},
+		{name: 'Karkasse'},
+		{name: 'Hellswamp'},
+		{name: 'Gweonid Forest'}
+	]
+	
+	
+	
+	
 	// [Functions]	
 	// Status Check
     var statusCheck = function() {
@@ -112,13 +150,13 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 						whichOwner = val.propowner;
 						whichProperty = key;
 						var ref = new Firebase(FIREBASE_URL + '/users/' + userID + '/properties/' + whichOwner + '/' + whichProperty + '/');
-						var whichPropObj = $firebaseObject(ref);
-						whichPropObj.$loaded().then(function() {
+						var whichPropArr = $firebaseArray(ref);
+						whichPropArr.$loaded().then(function() {
 							var dueunix;
 							var nowunix;
-							dueunix = whichPropObj.propduemoment;
+							dueunix = whichPropArr.propduemoment;
 							nowunix = moment().unix().toString();
-							var oldduedate = whichPropObj.propduedateiso;
+							var oldduedate = whichPropArr.propduedateiso;
 							var demodate = moment(oldduedate).add(7, 'days');
 							var demodateiso = moment(demodate).toISOString();
 							var demodateformatted = moment(demodate).format('ddd, MMM Do [at] h:mm a');
@@ -126,21 +164,25 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 
 							//Set status to overdue
 							if (nowunix > dueunix) {
-								whichPropObj.propstatus = 'overdue';
-								whichPropObj.propdemodateformatted = demodateformatted;
-								whichPropObj.propdemodate = demodateiso;
+								whichPropArr.propstatus = 'overdue';
+								whichPropArr.propdemodateformatted = demodateformatted;
+								whichPropArr.propdemodate = demodateiso;
 							} else if (timeBetween < 86400 && timeBetween > 0) { // Set due soon                        
-								whichPropObj.propstatus = 'duesoon';
+								whichPropArr.propstatus = 'duesoon';
 							} else  if (timeBetween < 0) { //Or set paid
-								whichPropObj.propdemodate = '';
-								whichPropObj.propstatus = 'paid';
+								whichPropArr.propdemodate = '';
+								whichPropArr.propstatus = 'paid';
 							}
+							console.log(whichPropArr.propstatus);
+						});
+						whichPropArr.$save().then(function() {
+							console.log("Checked!");
+							$scope.$apply();
 						});
 					}
 				}
 			});
 		});
-      console.log("Checked!");
 	}
 	
 	//Pay taxes on property
@@ -157,6 +199,7 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 
 				var oldduedate = whichPropObj.propduedateiso;
 				var duedate = moment(oldduedate).add(7, 'days');
+				var futureduedate = moment(oldduedate).add(14, 'days');  // For timer refresh
 
 				var compiledMomentDate = moment(duedate).format("ddd, MMM Do");
 				var compiledMomentTime = moment(duedate).format("h:mm a");
@@ -166,23 +209,47 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 
 				var duedateunix = moment(duedate).unix();
 				var duedateiso = moment(duedate).toISOString();
+				var futureduedateiso = moment(futureduedate).toISOString();
 				var duedatestring = duedateunix.toString();
 
 				console.log(ref);
-
+				
 				whichPropObj.propduedate = compiledMomentDateString;
 				whichPropObj.propduemoment = duedatestring;
 				whichPropObj.propduedateiso = duedateiso;
 				whichPropObj.propduetime = compiledMomentTimeString;
 				whichPropObj.propstatus = 'paid';
-
-				whichPropObj.$save()
-				.then(function () {
+				whichPropObj.$save().then(function() {
 					console.log('paid, checking status');
+					var out = $('#proptimer').attr('end-time');
+					
+					
+					console.log('time @ ' + out);
+					$scope.$broadcast('timer-clear');
+					
+					$timeout(function () {						
+						$('#proptimer').attr('end-time', '"' + duedateiso + '"');
+					}, 100);	
+					
+					$timeout(function () {						
+						$scope.$broadcast('timer-start');					
+					}, 100);	
+					
+					var midOut = $('#proptimer').attr('end-time');					
+					console.log('time @ ' + midOut);
+					
+					
+
+					$compile($('timer'))($scope);
+
+					var newOut = $('#proptimer').attr('end-time');					
+					console.log('time @ ' + newOut);
 					$timeout(function () {						
 						statusCheck();
-					}, 500);
-				});						
+					}, 500);			
+				});
+
+								
 				
 
 				console.log(key, property);
@@ -218,6 +285,7 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 		}
 		
 	}
+
 	
 	// Select property
     $scope.selectProperty = function(key, property) {
@@ -270,22 +338,31 @@ myApp.controller('PropCtrl', ['$scope', '$location', '$anchorScroll', '$rootScop
 		var ref = new Firebase(FIREBASE_URL + '/users/' + userID + '/properties/' + $scope.propowner);
 		var saveLocation = $firebaseArray(ref);
 
-			saveLocation.$save({ // push info below as object to db
-					propowner: $scope.propowner,
-					howmanypacks: 0,
-					proplocation: $scope.proplocation,
-					proptaxamount: $scope.proptaxamount,
-					propduedate: compiledMomentDateString,
-					propduemoment: duedatestring,
-					propduedateiso: duedateiso,
-					propduetime: compiledMomentTimeString,
-					propstatus: 'paid',
-					proptype: $scope.proptype,
-					propcategory: $scope.proptypes,
-					user: userID,
-					created: Firebase.ServerValue.TIMESTAMP
+		var chosenProptype = $scope.chosenProptype.name;
+		var chosenPropIcon = $scope.chosenProptype.icon;
+		console.log('Property type: ' + chosenProptype);
+		console.log('Property icon: ' + chosenPropIcon);
+
+			$scope.topBoxCollapsed = !$scope.topBoxCollapsed;
+		
+			saveLocation.$add({ // push info below as object to db
+				propowner: $scope.propowner,
+				howmanypacks: 0,
+				proplocation: $scope.chosenLocation.name,
+				propduedate: compiledMomentDateString,
+				propduemoment: duedatestring,
+				propduedateiso: duedateiso,
+				propduetime: compiledMomentTimeString,
+				proptype: chosenProptype,
+				icon: chosenPropIcon,
+				propcategory: $scope.proptypes,
+				user: userID,
+				created: Firebase.ServerValue.TIMESTAMP
 			})
 			.then(function() { // once data is saved to db...
+				var id = ref.key();
+				console.log("added record with id " + id);
+				saveLocation.$indexFor(id); // returns location in the array				
 				console.log('added, checking status');
 				$timeout(function () {						
 					statusCheck();

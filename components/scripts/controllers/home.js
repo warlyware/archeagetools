@@ -1,7 +1,8 @@
-//########################
-//# /controllers/home.js #
-//########################
+//############################
+//# /controllers/redirect.js #
+//############################
 
-myApp.controller('HomeCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, FIREBASE_URL) {
+myApp.controller('HomeCtrl', ['$scope', 'FIREBASE_URL', function($scope, FIREBASE_URL) {
 
+	
 }]);
