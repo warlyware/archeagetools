@@ -1,15 +1,37 @@
-h1, h2, h3, h5, h6, .navbar-brand, .formgroup {
+/* BASIC STYLES */
+
+body {
+	background-color: white;
+}
+
+hr { 
+	display: block; 
+	height: 1px;
+    border: 0; 
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
+
+h1, h2, h3, h5, h6, .navbar-brand {
 	font-family: 'Cinzel Decorative';
     text-shadow: none;
 }
 
-h4 {
+h4, .formgroup {
 	line-height: 1.5em;
 	font-family: 'Raleway';
-	font-weight: 100;
+	font-weight: 200;
 	text-shadow: none;
 	font-size: 1.3em;
 }
+
+.button-group {
+	padding-bottom: 25px;
+}
+
+
+/* NAVBAR STYLES */
 
 .navbar-brand {
 	padding-top: 20px;
@@ -17,8 +39,21 @@ h4 {
 	font-size: 2em;
 }
 
-body {
-	background-color: white;
+
+/* LOGIN & REGISTRATION */
+
+.login {
+	width: 40%;
+}
+
+.reg-form {
+	text-align: center;
+	margin: auto;
+	width: 50%;
+}
+
+.alerts {
+	list-style-type: none;
 }
 
 ul.alerts {
@@ -31,56 +66,8 @@ ul.alerts {
 	padding-bottom: 5px;
 }
 
-.alerts {
-	list-style-type: none;
-}
 
-.icon-size {
-	height: 30px;
-	width: 30px;
-}
-
-.login {
-	width: 40%;
-}
-
-.login input {
-
-}
-
-.reg-form {
-	text-align: center;
-	margin: auto;
-	width: 50%;
-}
-
-
-#prop-infobox {
-	border-top-right-radius: 12px;
-	border-top-left-radius: 12px;
-}
-
-#user-infobox ul {
-	line-height: 2em;
-	padding-left: 20px;
-	list-style-type: none;
-	font-size: 1.1em;
-	background-color: #4A7C57;
-}
-
-.button-group {
-	padding-bottom: 25px;
-}
-
-#infobox-wrapper {
-	border-top-right-radius: 12px;
-	border-top-left-radius: 12px;
-	background-color: #4A7C57;
-	color: white;
-	padding-top: 5px;
-	padding-bottom: 12px
-	padding-left: 0px;
-}
+/* PROPERTIES PAGE */
 
 .property {
 	display: inline-block;
@@ -114,15 +101,38 @@ ul.alerts {
 	border: 1px outset #4A7C57;		
 }
 
+.duesoon {
+	background-color: rgb(223, 185, 104) !important;
+}
+
+.overdue {
+	background-color: rgb(179, 35, 35) !important;
+}
 
 
-hr { 
-	display: block; 
-	height: 1px;
-    border: 0; 
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0; 
+/* Infobox Styles */
+
+#prop-infobox {
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
+}
+
+#user-infobox ul {
+	line-height: 2em;
+	padding-left: 20px;
+	list-style-type: none;
+	font-size: 1.1em;
+	background-color: #4A7C57;
+}
+
+#infobox-wrapper {
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
+	background-color: #4A7C57;
+	color: white;
+	padding-top: 5px;
+	padding-bottom: 12px
+	padding-left: 0px;
 }
 
 div.panel-heading, .panel {
@@ -132,12 +142,4 @@ div.panel-heading, .panel {
 
 .panel-group, .panel-collapse {
 	background-color: #4A7C57;	
-}
-
-.duesoon {
-	background-color: rgb(223, 185, 104) !important;
-}
-
-.overdue {
-	background-color: rgb(179, 35, 35) !important;
 }
