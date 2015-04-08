@@ -24,6 +24,10 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	// Initialize infobox
 	$scope.status = {isFirstOpen: false}; // Set the infobox to closed
 	$scope.topBoxCollapsed = true; // Set the topbox to closed
+	$scope.topBoxCharCollapsed = true; // Set the topbox for add character to closed
+	$scope.topBoxCharInfoCollapsed = true; // Set the topbox for character info to closed
+	
+
 	
 	//Set addProperty form options
 	$scope.houseTypes = [
@@ -70,11 +74,31 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	
 	// goToTopBox() (Go to topbox)
 	$scope.goToTopBox = function() {
+		$scope.topBoxCollapsed = !$scope.topBoxCollapsed;
 		if (!$scope.topBoxCollapsed) { // If topbox is collapsed
 			$location.hash('topboxgoto'); // Set hash to topbox location (currently in navbar)
 			$anchorScroll(); // Scroll to topbox hash
 		} // (Otherwise it will collapse topbox and not scroll to hash)
 	}; // /goToTopBox()
+	
+	// goToCharTopBox() (Go to topbox)
+	$scope.goToCharTopBox = function() {
+		$scope.topBoxCharCollapsed = !$scope.topBoxCharCollapsed;
+		if (!$scope.topBoxCharCollapsed) { // If topbox is collapsed
+			$location.hash('topboxgoto'); // Set hash to topbox location (currently in navbar)
+			$anchorScroll(); // Scroll to topbox hash
+		}
+	}; // /goToTopBox()
+	
+	$scope.goToCharInfoTopBox = function(character) {
+		if ($scope.topBoxCharInfoCollapsed) { // If topbox is collapsed
+			$scope.topBoxCharInfoCollapsed = false;
+			$location.hash('topboxgoto'); // Set hash to topbox location (currently in navbar)
+			$anchorScroll(); // Scroll to topbox hash
+		}
+		console.log(character);
+		$scope.selectedCharacter = character;
+	}
 	
  	// statusCheck() (Check property tax due status)
     var statusCheck = function() {
@@ -154,7 +178,6 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		var saveLocation = $firebaseArray(ref); // Create array from ref for save location
 		var chosenProptype = $scope.chosenProptype.name; // Get property type from user input
 		var chosenPropIcon = $scope.chosenProptype.icon; // Get property type icon from user input
-			$scope.topBoxCollapsed = !$scope.topBoxCollapsed; // Close the topbox
 			saveLocation.$add({ // Take all the data and add it to array as new record
 				propowner: $scope.propowner, // Owner
 				howmanypacks: 0, // Number of packs on property (packs not yet implemented)
@@ -171,6 +194,7 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 			}).then(function() { // once data is saved to db...
 				var id = ref.key(); // Get the key of our new property
 				console.log("Added record with id " + id); // Tell console we added property
+				$scope.topBoxCollapsed = !$scope.topBoxCollapsed; // Close the topbox
 				$timeout(function () { // Wait a moment for changes to database
 					statusCheck(); // Recheck status of properties
 				}, 500);
@@ -226,6 +250,42 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 					statusCheck(); // Check the status of properties again to update properties
 				}); //  /whichPropObj.$save()
 			}); //  /whichPropObj.$loaded()
-		} //  / Confirmation
-	}; //  /payTaxes()	
+		} //  /Confirmation
+	}; //  /payTaxes()
+	
+	// addCharacter() (Add a character)
+	$scope.addCharacter = function(key) {
+		var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/characters/'); // Get ref of characters
+		var saveLocation = $firebaseArray(ref); // Create array from ref
+		saveLocation.$add({ // Take character data and add it to array as new record
+			charname: $scope.charactername, // Name
+			charlvl: $scope.characterlevel // Level
+		}).then(function(){
+			$scope.topBoxCharCollapsed = !$scope.topBoxCharCollapsed; // Close character topbox
+			console.log('Added ' + $scope.charactername + ' at level ' +$scope.characterlevel); // Tell console we added a character
+		}); //  /saveLocation.$add()
+	}; //  /addCharacter() 
+	
+	// deleteCharacter() (Delete a character)
+	$scope.deleteCharacter = function(selectedCharacter) {
+		var r = confirm('press OK to delete character'); // Confirm user wants to delete character (ugly, need to make modal)
+		if (r == true) { // If answer yes...
+			var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/characters/' + selectedCharacter + '/'); // Get ref of character
+			var characterObj = $firebaseObject(ref); // Create object from ref
+			characterObj.$loaded().then(function() {  // Once the object is loaded...
+				var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/properties/' + characterObj.charname + '/'); // Get ref of character's properties	
+				var propertyObj = $firebaseObject(ref); // Create object from ref
+				var character = characterObj.charname; // Set character name for feedback
+				propertyObj.$loaded().then(function() { // Once propertyObj is loaded...
+					propertyObj.$remove().then(function() { // Remove character properties then...
+						console.log('Character properties removed for ' + character); // Tell console we removed character's properties						
+					}); //  /propertyObj.$remove()
+				}); //  /propertyObj.$loaded()
+				characterObj.$remove().then(function () { // Remove the character then...
+					$scope.topBoxCharInfoCollapsed = !$scope.topBoxCharInfoCollapsed; // Close character info box
+					console.log('Character removed: ' + character); // Tell console we removed character
+				}); //  /characterObj.$remove()
+			}); //  /characterObj.$loaded()
+		} //  /Confirmation
+	}; //  /deleteCharacter()
 }]); //  /PropertyCtrl

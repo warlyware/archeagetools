@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container register">
 	<!-- Registration form	 -->
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-3">
@@ -9,6 +9,12 @@
 					<input class="form-control" type="email" name="email" placeholder="email" autofocus ng-model="user.email" ng-required="true">
 					<input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
 					<input class="form-control" type="text" name="mainChar" placeholder="main character name" ng-model="user.mainChar" ng-required="true">
+				</div>
+				<div class="form-group">
+					<h4 class="text-center">server</h4>
+					<select required class="text-center" id="registrationServer" ng-model="user.server" ng-options="server.name for server in servers"></select>
+					<h4 class="text-center" ng-show="user.server">guild</h4>
+					<select required id="registrationGuild" ng-show="user.server" ng-model="user.guild" ng-options="guild.name for guild in user.server.guilds"></select>
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary" ng-disabled="waterform.$invalid">register</button>

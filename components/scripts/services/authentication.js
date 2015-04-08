@@ -34,10 +34,14 @@ myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject
 				password: user.password
 			}).then(function(regUser) {
 				var firebaseUsers = new Firebase(FIREBASE_URL + 'users');
+				console.log('Server: ' + user.server);
+				console.log('Guild: ' + user.guild);				
 				firebaseUsers.child('/' + regUser.uid).set({
 					created: Firebase.ServerValue.TIMESTAMP,
 					userID: regUser.uid,
 					mainChar: user.mainChar,
+					server: user.server.name,
+					guild: user.guild.name,
 					email: user.email
 				});
 			});

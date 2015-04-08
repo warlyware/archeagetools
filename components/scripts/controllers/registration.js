@@ -2,11 +2,22 @@
 //# /controllers/registration.js #
 //################################
 
-myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
+myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$timeout', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $timeout, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
 	
+	// [ Variables ]
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref);
+	// Registered servers and guilds
+	$scope.servers = [
+		{name: 'Inoch', guilds: [
+			{name: 'Waterdeep'}
+		]},
+		{name: 'Enzo'},
+		{name: 'Ollo'},
+	]
 	
+	// [ Functions ]
+	// login()
 	$scope.login = function() {
 		Authentication.login($scope.user)
 		.then(function(user) {
@@ -15,17 +26,20 @@ myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$firebaseAuth', '
 			$scope.message = error.message;
 			console.log(error.message);
 		});
-	}
+	}; // /login()
 
+	// register()
 	$scope.register = function() {
 		Authentication.register($scope.user)
-			.then(function(user) {
-				Authentication.login($scope.user);
+		.then(function(user) {
+			console.log('User created!');
+			Authentication.login($scope.user);
+			$timeout(function () {
 				$location.path('/properties');
-			}).catch(function(error) {
-				$scope.regMessage = error.message;
-			});
-	}
-	
-	
+			}, 500);
+		}).catch(function(error) {
+			$scope.regMessage = error.message;
+			console.log($scope.regMessage);
+		});
+	}; //  /register()
 }]);

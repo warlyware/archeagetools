@@ -30,7 +30,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		templateUrl: 'views/login.html'
 	})
     .state('register', {
-		url: '/register',
+// 		url: '/invite=a8t7houtbgle3hb5ybgo8iuhoihgiyh84',
+		url: '/register',		
 		resolve: {
 			Authentication: 'Authentication'
 		},
