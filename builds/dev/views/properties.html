@@ -1,6 +1,8 @@
-<div class="container">
-	<div class="row">
-		<div class="col-lg-9">
+<div class="container"> <!-- Main container -->
+	<div class="row">  <!-- Main row -->
+		<!-- Main column -->
+		<div class="col-lg-9"> 
+			
 			<!-- Main Topbox / Add Property Topbox -->
 			<div class="well" collapse="topBoxCollapsed" id="topbox">
 				<form class="formgroup text-center" name="waterform" ng-submit="addProperty()" novalidate>
@@ -170,9 +172,9 @@
 					<button type="submit" class="btn" ng-disabled="waterform.$invalid || !chosenProptype">add</button>
 					<button type="button" class="btn" ng-click="topBoxCollapsed = !topBoxCollapsed">cancel</button>					
 				</form>
-			</div>
+			</div> <!--  /Main Topbox / Add Property Topbox -->
+			
 			<!-- Add Character Topbox -->
-
 			<div class="container-fluid " collapse="topBoxCharCollapsed" id="topbox-character">
 				<div class="row">
 					<div class="col-lg-6 col-lg-offset-3 well">
@@ -246,24 +248,28 @@
 						</form>	
 					</div>
 				</div>
-			</div>
+			</div> <!--  /Add Character Topbox -->
 
-			
 			<!-- Character Info Topbox -->
 			<div class="container-fluid " collapse="topBoxCharInfoCollapsed" id="topbox-character">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2 well">
 						<div class="text-right"><span class="glyphicon glyphicon-remove button-close" ng-click="topBoxCharInfoCollapsed = !topBoxCharInfoCollapsed"></span></div>
-						<h3 class="text-center">{{selectedCharacter.charname}} ( {{selectedCharacter.charlvl}} )</h3>
-						<div class="text-center">
+						<h2 class="text-center">{{selectedCharacter.charname}} ( <a href="#" class="editable" editable-select="selectedCharacter.charlvl" e-ng-options="level for level in levels" onbeforesave="updateCharacter($data)"> {{selectedCharacter.charlvl || "empty" }}</a> )</h2>
+						
+						<div class="text-center" ng-repeat="proficiency in selectedCharacter.prof">
+							{{proficiency}}
+						</div>
+						<div class="text-center"><!-- Character Info Topbox buttons -->
 							<button type="button" class="btn btn-default" ng-click="deleteCharacter(selectedCharacter.$id)">
 								<span class="glyphicon glyphicon-trash"></span>
 							</button>
-						</div>
+						</div><!--  /Character Info Topbox buttons -->
 					</div>
 				</div>
-			</div>
+			</div><!--  /Character Info Topbox -->
 			
+			<!-- Properties -->
 			<div ng-repeat="val in properties" class="text-center well">
 				<h2>{{val.$id}}</h2>
 				<hr>
@@ -292,40 +298,46 @@
 						</div>
 					</div>
 				</div>
-			</div>	
-		</div>
-		<!-- Infobox -->
+			</div>	<!--  /Properties -->
+		</div> <!--  /Main column -->
+		
+		<!-- Side Column for Infobox -->
 		<div class="col-xs-3 ">
-			<div id="infobox-wrapper" affix>
+			
+			<!-- Infobox -->
+			<div id="infobox-wrapper" affix> <!-- Infobox -->
 				<h3 class="text-center"><em>Hello {{currentUser.mainChar}}</em>
 				</h3>
-					<div class="button-group text-center">
+					<div class="button-group text-center"> <!-- Infobox buttons -->
 						<span class="btn btn-default" ng-click="goToTopBox()">
 							<span class="glyphicon glyphicon-plus-sign"></span>
 						</span>
 						<span class="btn btn-default" ng-click="status.characterInfo = !status.characterInfo">
 							<span class="glyphicon glyphicon-user"></span>
 						</span>
-					</div>				
-				<!-- Character box -->
+					</div> <!--  /Infobox buttons -->
+				
+				<!-- Character & Property Info Panels -->
 				<accordion close-others="true">
-					<accordion-group is-open="status.addItem">
-					</accordion-group>
+					
+					<!-- Character Info Panel -->
 					<accordion-group is-open="status.characterInfo" class="character-infobox">
 						<h3 class="text-center">characters</h3>
 						<h4 class="text-center character-name" ng-repeat="character in characters" ng-click="goToCharInfoTopBox(character)">{{character.charname}}  ( {{character.charlvl}} )</h3>
-						<div class="button-group text-center">
+						<div class="button-group text-center"> <!-- Character Info Panel buttons -->
 							<span class="btn btn-default" ng-click="goToCharTopBox()">
 								<span class="glyphicon glyphicon-plus-sign"></span>
 							</span>
-						</div>
-					</accordion-group>
+						</div> <!--  /Character Info Panel buttons -->
+					</accordion-group> <!--  /Character Info Panel -->
+					
+					<!--  Property Info Panel -->
 					<accordion-group  is-open="status.propInfo">
 						<div id="prop-infobox">
 						</div>
 					</accordion-group>
-				</accordion>
-			</div>
-		</div>
-	</div>
-</div>
+				</accordion> <!--  /Character & Property Info Panels -->
+			</div> <!--  /Infobox -->
+		</div> <!--  /Side Column for Infobox -->
+	</div><!--  /Main row -->
+</div> <!--  /Main container -->

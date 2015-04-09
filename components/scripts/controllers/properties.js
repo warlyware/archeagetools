@@ -15,9 +15,8 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	$scope.characters = charArr;  // Add characters array to scope
 	
     propertiesArr.$loaded().then(function() { // Once the properties array has loaded...
-      statusCheck(); // Check status (tax due date) of properties
+		statusCheck(); // Check status (tax due date) of properties
     });
-
 	
 	// [ Init Options ]
 	
@@ -27,9 +26,11 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	$scope.topBoxCharCollapsed = true; // Set the topbox for add character to closed
 	$scope.topBoxCharInfoCollapsed = true; // Set the topbox for character info to closed
 	
+	//Set form options
+	$scope.levels = [
+		1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55
+	]
 
-	
-	//Set addProperty form options
 	$scope.houseTypes = [
 		{name: 'Cottage', type: 'house', icon: 'cottage'},
 		{name: 'Thatched Farmhouse', type: 'house', icon: 'farmhouse'},
@@ -61,6 +62,12 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		{name: 'Karkasse'},
 		{name: 'Hellswamp'},
 		{name: 'Gweonid Forest'}
+	]
+	
+	$scope.proficiencies = [
+		{name: 'Farming', icon: 'farming'},
+		{name: 'Fishing', icon: 'fishing'},
+		{name: 'Gathering', icon: 'gathering'}		
 	]
 	
 	// Add responsiveness to affixed infobox
@@ -288,4 +295,20 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 			}); //  /characterObj.$loaded()
 		} //  /Confirmation
 	}; //  /deleteCharacter()
+	
+	// updateCharacter() (Update a character)
+	$scope.updateCharacter = function($data) {
+		var characterID = $scope.selectedCharacter.$id;
+		var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/characters/' + characterID + '/'); // Get ref of character
+		var characterObj = $firebaseObject(ref); // Create object from ref
+		characterObj.$loaded().then(function() {
+			var currentLevel = characterObj.charlvl; 
+			console.log('current: ' + currentLevel);
+			console.log('new: ' + $data);
+			characterObj.charlvl = $data;
+			characterObj.$save().then(function() {
+				console.log('... new current: ' + characterObj.charlvl);				
+			});
+		});
+	}
 }]); //  /PropertyCtrl

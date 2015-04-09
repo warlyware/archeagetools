@@ -12,7 +12,7 @@ myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$timeout', '$fire
 		{name: 'Inoch', guilds: [
 			{name: 'Waterdeep'}
 		]},
-		{name: 'Enzo'},
+		{name: 'Ezi'},
 		{name: 'Ollo'},
 	]
 	
