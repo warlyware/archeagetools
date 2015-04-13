@@ -97,10 +97,10 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	$scope.topBoxCharInfoCollapsed = true; // Set the topbox for character info to closed
 	
 	//Set form options
-	$scope.levels = [
-		1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55
-	]
+	$scope.levels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55];
 
+	$scope.proflvls = ['10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k', '90k']
+	
 	$scope.houseTypes = [
 		{name: 'Cottage', type: 'house', icon: 'cottage'},
 		{name: 'Thatched Farmhouse', type: 'house', icon: 'farmhouse'},
@@ -111,18 +111,18 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		{name: 'Breezy Bungalow', type: 'house', icon: 'bungalow'},
 		{name: 'Wind-Swept Mansion', type: 'house', icon: 'wsmansion'},
 		{name: 'Mansion', type: 'house', icon: 'mansion'}
-	]
+	];
 	$scope.farmTypes = [
 		{name: '8x8 Scarecrow', type: 'farm', icon: 'scarecrowsm'},
 		{name: '16x16 Scarecrow', type: 'farm', icon: 'scarecrowlg'},
 		{name: 'Gazebo', type: 'farm', icon: 'gazebo'}
-	]
+	];
 	$scope.workstationTypes = [
 		{name: 'Private Loom', type: 'workstation', icon: 'loom'},
 		{name: 'Private Carpentry Bench', type: 'workstation', icon: 'carpentry'},
 		{name: 'Private Masonry Table', type: 'workstation', icon: 'masonry'},
 		{name: 'Private Smelter', type: 'workstation', icon: 'smelter'}
-	]
+	];
 	$scope.locations = [
 		{name: 'Two Crowns'}, 
 		{name: 'Sanddeep'}, 
@@ -132,13 +132,34 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		{name: 'Karkasse'},
 		{name: 'Hellswamp'},
 		{name: 'Gweonid Forest'}
-	]
+	];
 	
 	$scope.proficiencies = [
 		{name: 'Farming', icon: 'farming'},
 		{name: 'Fishing', icon: 'fishing'},
-		{name: 'Gathering', icon: 'gathering'}		
-	]
+		{name: 'Gathering', icon: 'gathering'},
+		{name: 'Logging', icon: 'logging'},
+		
+	];
+	
+	$scope.months = [
+		{month: 'January', val: '01'},
+		{month: 'February', val: '02'},
+		{month: 'March', val: '03'},
+		{month: 'April', val: '04'},
+		{month: 'May', val: '05'},
+		{month: 'June', val: '06'},
+		{month: 'July', val: '07'},
+		{month: 'August', val: '08'},
+		{month: 'September', val: '09'},
+		{month: 'October', val: '10'},		
+		{month: 'November', val: '11'},
+		{month: 'December', val: '12'}
+	];
+	
+	$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];	
+	$scope.hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+	$scope.minutes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55,56,57,58,59];
 	
 	// Add responsiveness to affixed infobox
 	$(function() {
@@ -167,6 +188,7 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		}
 	}; // /goToTopBox()
 	
+	// goToCharInfoBox / Select Character
 	$scope.goToCharInfoTopBox = function(character) {
 		if ($scope.topBoxCharInfoCollapsed) { // If topbox is collapsed
 			$scope.topBoxCharInfoCollapsed = false;
@@ -175,7 +197,14 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		}
 		console.log(character);
 		$scope.selectedCharacter = character;
-	}
+		var characterID = $scope.selectedCharacter.$id;
+		var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/characters/' + characterID + '/prof/'); // Get ref of character
+		var profObj = $firebaseObject(ref);
+		profObj.$loaded().then(function() {
+			$scope.selectedCharacterProf = profObj;
+			console.log(profObj);			
+		})
+	};
 	
  	// statusCheck() (Check property tax due status)
     var statusCheck = function() {
@@ -367,20 +396,31 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	}; //  /deleteCharacter()
 	
 	// updateCharacter() (Update a character)
-	$scope.updateCharacter = function($data) {
+	$scope.updateCharacter = function($data, updateType) {
+		if (updateType === undefined) {
+			updateType = $scope.updateType;
+		}
 		var characterID = $scope.selectedCharacter.$id;
 		var ref = new Firebase(FIREBASE_URL + 'users/' + userID + '/characters/' + characterID + '/'); // Get ref of character
 		var characterObj = $firebaseObject(ref); // Create object from ref
 		characterObj.$loaded().then(function() {
-			var currentLevel = characterObj.charlvl; 
-			console.log('current: ' + currentLevel);
-			console.log('new: ' + $data);
-			characterObj.charlvl = $data;
-			characterObj.$save().then(function() {
-				console.log('... new current: ' + characterObj.charlvl);				
-			});
+			if (updateType == 'level') {
+				console.log('we got level');
+				characterObj.charlvl = $data;
+				characterObj.$save().then(function() {
+					console.log('Changed ' + updateType);				
+				});	
+			} else if (updateType == 'proficiency') {
+				ref.child('/prof/' + key + '/').set(
+					$data
+				);
+			} else if (updateType == 'proficiencyNew') {
+				ref.child('/prof/' + $scope.proficiencytype.name + '/').set(
+					$scope.proficiencylvl
+				);
+			}
 		});
-	}
+	};
 }]); //  /PropertyCtrl
 //############################
 //# /controllers/redirect.js #

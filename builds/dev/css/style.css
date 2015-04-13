@@ -26,6 +26,21 @@ h4, .formgroup {
 	font-size: 1.3em;
 }
 
+td {
+	width: 50px !important;
+}
+
+.inputwrapper button {
+	line-height: 1em;
+	height: 23px;
+	display: inline-block;
+}
+
+.inputwrapper select {
+	display: inline-block;
+	height: 33px;	
+}
+
 .button-group {
 	padding-bottom: 25px;
 }
@@ -41,6 +56,15 @@ h4, .formgroup {
 .editable {
 	color: black !important;
 	border-bottom: dashed 1px black !important;
+}
+
+.inputwrapper {
+	padding-bottom: 10px
+}
+
+.table {
+	font-family: 'Raleway';
+	font-size: 1.3em;	
 }
 
 /* NAVBAR STYLES */
@@ -164,7 +188,6 @@ div.panel-heading, .panel {
 .panel-group, .panel-collapse {
 	background-color: #4A7C57;	
 }
-
 
 /*!
 angular-xeditable - 0.1.9
