@@ -51,6 +51,10 @@
 								<input class="form-control" type="text" name="charactername" ng-model="charactername" ng-required="true">
 								<h4>level</h4>
 								<select id="characterLevel" ng-model="characterlevel" ng-options="level for level in levels"></select>
+								<h4>race</h4>
+								<select id="characterRace" ng-model="characterrace" ng-options="race for race in races"></select>
+								<h4>gender</h4>
+								<select id="characterGender" ng-model="charactergender" ng-options="gender for gender in genders"></select>								
 							</div>
 							<br>
 							<button type="submit" class="btn" ng-disabled="characterform.$invalid">add</button>
@@ -63,39 +67,43 @@
 			<!-- Character Info Topbox -->
 			<div class="container-fluid " collapse="topBoxCharInfoCollapsed" id="topbox-character">
 				<div class="row">
-					<div class="col-lg-8 col-lg-offset-2 well">
+					<div class="col-lg-10 col-lg-offset-1 well">
 						<div class="text-right"><span class="glyphicon glyphicon-remove button-close" ng-click="topBoxCharInfoCollapsed = !topBoxCharInfoCollapsed"></span></div>
-						<h2 class="text-center">{{selectedCharacter.charname}} ( <a href="#" class="editable" editable-select="selectedCharacter.lvl" e-ng-options="level for level in levels" onbeforesave="updateType='level';updateCharacter($data, updateType)">{{selectedCharacter.charlvl || "empty" }}</a> )</h2>
-						
-						<form class="formgroup text-center" name="profform" ng-submit="updateCharacter($data, updateType)" novalidate>
-							<div class="inputwrapper">
-								<select ng-model="proficiencytype" ng-options="prof.name for prof in proficiencies"></select>
-								<select ng-model="proficiencylvl" ng-options="proflvl for proflvl in proflvls"></select>
-								<button ng-click="updateType='proficiencyNew'" type="submit" ng-disabled="profform.$invalid">add</button>
-							</div>
-						</form>
-						
-						<h3 class="text-center">Proficiencies</h3>
-						<div class="row">
-							<div class="col-lg-8 col-lg-offset-2">
-								<table class="table">
-									<tbody ng-repeat="(key,val) in selectedCharacterProf">
-										<tr>
-											<td></td>
-											<td>{{key}}</td>
-											<td>
-												<a href="#" class="editable" editable-select="lvl" e-ng-options="proflvl for proflvl in proflvls" onbeforesave="updateType='proficiency';updateCharacter($data, updateType, key)">{{val}}</a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+						<div class="col-lg-4">
+							<img class="character-avatar center-block" ng-src="img/holder.jpg">
+							<h3 class="text-center">{{selectedCharacter.charname}} (<a href="#" class="editable" editable-select="selectedCharacter.lvl" e-ng-options="level for level in levels" onbeforesave="updateType='level';updateCharacter($data, updateType)">{{selectedCharacter.charlvl || "empty" }}</a>)</h3>
+							<div class="text-center"><!-- Character Info Topbox buttons -->
+								<button type="button" class="btn btn-default" ng-click="deleteCharacter(selectedCharacter.$id)">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</div><!--  /Character Info Topbox buttons -->
+						</div>
+						<div class="col-lg-8">
+							<div class="row">
+								<div class="col-lg-8 col-lg-offset-2">
+
+									<h3 class="text-center">Proficiencies</h3>
+									<table class="table">
+										<tbody ng-repeat="(key,val) in selectedCharacterProf">
+											<tr>
+												<td></td>
+												<td>{{key}}</td>
+												<td>
+													<a href="#" class="editable" editable-select="lvl" e-ng-options="proflvl for proflvl in proflvls" onbeforesave="updateType='proficiency';updateCharacter($data, updateType, key)">{{val}}</a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<form class="formgroup text-center" name="profform" ng-submit="updateCharacter($data, updateType)" novalidate>
+										<div class="inputwrapper">
+											<select ng-model="proficiencytype" ng-options="prof.name for prof in proficiencies"></select>
+											<select ng-model="proficiencylvl" ng-options="proflvl for proflvl in proflvls"></select>
+											<button ng-click="updateType='proficiencyNew'" type="submit" ng-disabled="profform.$invalid">add</button>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
-						<div class="text-center"><!-- Character Info Topbox buttons -->
-							<button type="button" class="btn btn-default" ng-click="deleteCharacter(selectedCharacter.$id)">
-								<span class="glyphicon glyphicon-trash"></span>
-							</button>
-						</div><!--  /Character Info Topbox buttons -->
 					</div>
 				</div>
 			</div><!--  /Character Info Topbox -->

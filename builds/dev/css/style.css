@@ -185,6 +185,12 @@ div.panel-heading, .panel {
 	cursor: pointer;
 }
 
+.character-avatar {
+	border-radius: 50px;
+	background-color: rgba(174,221,252,0.6);
+	width: 120px;
+}
+
 .panel-group, .panel-collapse {
 	background-color: #4A7C57;	
 }

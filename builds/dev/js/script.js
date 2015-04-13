@@ -101,6 +101,10 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 
 	$scope.proflvls = ['10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k', '90k']
 	
+	$scope.races = ['Elf', 'Nuian', 'Asian', 'Catpeople']
+	
+	$scope.genders = ['Male', 'Female']
+	
 	$scope.houseTypes = [
 		{name: 'Cottage', type: 'house', icon: 'cottage'},
 		{name: 'Thatched Farmhouse', type: 'house', icon: 'farmhouse'},
@@ -365,7 +369,9 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		var saveLocation = $firebaseArray(ref); // Create array from ref
 		saveLocation.$add({ // Take character data and add it to array as new record
 			charname: $scope.charactername, // Name
-			charlvl: $scope.characterlevel // Level
+			charlvl: $scope.characterlevel, // Level
+			gender: $scope.charactergender,
+			race: $scope.characterrace
 		}).then(function(){
 			$scope.topBoxCharCollapsed = !$scope.topBoxCharCollapsed; // Close character topbox
 			console.log('Added ' + $scope.charactername + ' at level ' +$scope.characterlevel); // Tell console we added a character
@@ -396,7 +402,7 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	}; //  /deleteCharacter()
 	
 	// updateCharacter() (Update a character)
-	$scope.updateCharacter = function($data, updateType) {
+	$scope.updateCharacter = function($data, updateType, key) {
 		if (updateType === undefined) {
 			updateType = $scope.updateType;
 		}
@@ -418,6 +424,8 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 				ref.child('/prof/' + $scope.proficiencytype.name + '/').set(
 					$scope.proficiencylvl
 				);
+				$scope.proficiencytype.name = '';
+				$scope.proficiencylvl = '';
 			}
 		});
 	};
