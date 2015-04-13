@@ -20,6 +20,7 @@ var env,
 	viewsSrc,
 	lessSrc,
 	cssSrc,
+	imgSrc,
 	outputDir;
 
 //Create environment variable
@@ -38,6 +39,7 @@ indexSrc = ['components/*.html'];
 viewsSrc = ['components/views/*.html'];
 lessSrc = ['components/less/bootstrap.less'];
 cssSrc = ['components/css/*.css'];
+imgSrc = ['components/img/*.*'];
 
 // [Gulp tasks]
 
@@ -52,7 +54,7 @@ gulp.task('html', function() {
 //Process views
 gulp.task('views', function() {
 	gulp.src(viewsSrc)
-		.pipe(gulpif(env === 'production', minifyHTML()))  //If in production, minify...
+//		.pipe(gulpif(env === 'production', minifyHTML()))  //If in production, minify...
 		.pipe(gulp.dest(outputDir + '/views'))  //Place in production folder
 		.pipe(connect.reload())  //Reload page to reflect changes
 });
@@ -91,6 +93,12 @@ gulp.task('css', function() {
 		.pipe(connect.reload())  //Reload page to reflect changes
 });
 
+gulp.task('img', function() {
+	gulp.src(imgSrc)
+		.pipe(gulp.dest(outputDir + '/img'))  //Place in output dir
+		.pipe(connect.reload())  //Reload page to reflect changes
+});
+
 //Watch for any changes, update when dedected
 gulp.task('watch', function() {
 	gulp.watch(jsSrc, ['js']);
@@ -99,6 +107,7 @@ gulp.task('watch', function() {
 	gulp.watch(viewsSrc, ['views']);
 	gulp.watch(lessSrc, ['less']);
 	gulp.watch(cssSrc, ['css']);
+	gulp.watch(cssSrc, ['img']);	
 });
 
 //Connect task for livereload server
@@ -115,4 +124,4 @@ gulp.task('connect', function() {
 });
 
 //Declare default task
-gulp.task('default', ['html', 'views', 'less', 'css', 'json', 'js', 'connect', 'watch']);
+gulp.task('default', ['html', 'views', 'less', 'css', 'json', 'js', 'img', 'connect', 'watch']);
