@@ -17,7 +17,7 @@ myApp.run(['$rootScope', '$location', 'editableOptions', function($rootScope, $l
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("/tlm");
+	$urlRouterProvider.otherwise("tlm");
 
 	// States
 	$stateProvider
@@ -41,15 +41,15 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
     .state('tlm', {
 		url: '/tlm',
 		controller: 'RedirectCtrl',
-		templateUrl: 'views/tlm.html',
-		data: {
-			css: 'css/tlm.css'
-		}
+		templateUrl: 'views/tlm.html'
 	})	
     .state('properties', {
 		url: '/properties',
 		controller: 'PropCtrl',
 		templateUrl: 'views/properties.html',
+		data: {
+			css: 'css/style.css'
+		},
 		resolve: {
 			currentAuth: ['Authentication', function(Authentication) {
 				return Authentication.requireAuth();

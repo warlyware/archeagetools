@@ -19,7 +19,7 @@ myApp.run(['$rootScope', '$location', 'editableOptions', function($rootScope, $l
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("/tlm");
+	$urlRouterProvider.otherwise("tlm");
 
 	// States
 	$stateProvider
@@ -43,15 +43,15 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
     .state('tlm', {
 		url: '/tlm',
 		controller: 'RedirectCtrl',
-		templateUrl: 'views/tlm.html',
-		data: {
-			css: 'css/tlm.css'
-		}
+		templateUrl: 'views/tlm.html'
 	})	
     .state('properties', {
 		url: '/properties',
 		controller: 'PropCtrl',
 		templateUrl: 'views/properties.html',
+		data: {
+			css: 'css/style.css'
+		},
 		resolve: {
 			currentAuth: ['Authentication', function(Authentication) {
 				return Authentication.requireAuth();
@@ -434,11 +434,28 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 //# /controllers/redirect.js #
 //############################
 
-myApp.controller('RedirectCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$location', 'FIREBASE_URL', function($scope, $rootScope, $state, $stateParams, $location, FIREBASE_URL) {
+myApp.controller('RedirectCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$state', '$stateParams', '$location', 'FIREBASE_URL', function($scope, $rootScope, $window, $timeout, $state, $stateParams, $location, FIREBASE_URL) {
 
-	if ($rootScope.currentUser) {
-		$location.path('/properties');
+	var redirect = function(){
+		console.log('Trying to redirect...');
+		$window.location = "#/properties";
 	}
+	
+	$(document).ready(function() {
+		console.log('loaded');
+
+		$timeout(function () { // Wait a moment for changes to database
+			redirect();
+		}, 500);			
+
+	/** this is come when complete page is fully loaded, including all frames, objects and images **/
+	});
+	
+// 	scope.$apply(function() { $location.path("/property"); });
+
+
+	
+// 	redirect();
 	
 }]);
 //################################
