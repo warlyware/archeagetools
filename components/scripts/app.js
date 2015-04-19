@@ -30,8 +30,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		templateUrl: 'views/login.html'
 	})
     .state('register', {
-// 		url: '/invite=a8t7houtbgle3hb5ybgo8iuhoihgiyh84',
-		url: '/register',		
+		url: '/invite=a8t7houtbgle3hb5ybgo8iuhoihgiyh84',
+// 		url: '/register',
 		resolve: {
 			Authentication: 'Authentication'
 		},
@@ -40,7 +40,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 	})	
     .state('tlm', {
 		url: '/tlm',
-		controller: 'RedirectCtrl',
+		controller: 'RegistrationCtrl',
 		templateUrl: 'views/tlm.html'
 	})	
     .state('properties', {

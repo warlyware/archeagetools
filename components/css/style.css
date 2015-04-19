@@ -58,6 +58,10 @@ td {
 	border-bottom: dashed 1px black !important;
 }
 
+.editable-click {
+	font-style: italic;
+}
+
 .inputwrapper {
 	padding-bottom: 10px
 }

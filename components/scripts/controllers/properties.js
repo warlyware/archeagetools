@@ -29,7 +29,7 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	//Set form options
 	$scope.levels = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55];
 
-	$scope.proflvls = ['10k', '20k', '30k', '40k', '50k', '60k', '70k', '80k', '90k']
+	$scope.proflvls = ['10k+', '20k+', '30k+', '40k+', '50k+', '60k+', '70k+', '80k+', '90k']
 	
 	$scope.races = ['Elf', 'Nuian', 'Asian', 'Catpeople']
 	
@@ -69,11 +69,26 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	];
 	
 	$scope.proficiencies = [
-		{name: 'Farming', icon: 'farming'},
-		{name: 'Fishing', icon: 'fishing'},
-		{name: 'Gathering', icon: 'gathering'},
-		{name: 'Logging', icon: 'logging'},
-		
+		{name: 'Farming'},
+		{name: 'Fishing'},
+		{name: 'Gathering'},
+		{name: 'Alchemy'},
+		{name: 'Cooking'},
+		{name: 'Construction'},
+		{name: 'Handicrafts'},
+		{name: 'Husbandry'},
+		{name: 'Logging'},
+		{name: 'Machining'},
+		{name: 'Metalwork'},
+		{name: 'Printing'},
+		{name: 'Mining'},
+		{name: 'Masonry'},
+		{name: 'Tailoring'},
+		{name: 'Leatherwork'},
+		{name: 'Carpentry'},
+		{name: 'Larceny'},
+		{name: 'Commerce'},
+		{name: 'Artistry'}
 	];
 	
 	$scope.months = [
@@ -92,8 +107,8 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 	];
 	
 	$scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];	
-	$scope.hours = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23];
-	$scope.minutes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55,56,57,58,59];
+	$scope.hours = ['00','01','02','03','04','05','06','07','08','09',10,11,12,13,14,15,16,17,18,19,20,21,22,23];
+	$scope.minutes = ['00','01','02','03','04','05','06','07','08','09',10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,48,50,51,52,53,54,55,56,57,58,59];
 	
 	// Add responsiveness to affixed infobox
 	$(function() {
@@ -210,6 +225,7 @@ myApp.controller('PropCtrl', ['$scope', '$compile', '$location', '$anchorScroll'
 		var duedateunix = moment(duedate).unix(); // UNIX formatted due date
 		var duedateiso = moment(duedate).toISOString(); // ISO formatted due date
 		var duedatestring = duedateunix.toString(); // String formatted due date
+		console.log($scope.propduemonth, $scope.propdueday, $scope.propduehour, $scope.propduemin);
 		var compiledMomentDate = moment(duedate).format("ddd, MMM Do"); // Human readable date
 		var compiledMomentTime = moment(duedate).format("h:mm a"); // Human readable time
 		var compiledMomentDateString = compiledMomentDate.toString(); // Human readable date as string 

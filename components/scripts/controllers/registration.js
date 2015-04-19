@@ -42,4 +42,9 @@ myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$timeout', '$fire
 			console.log($scope.regMessage);
 		});
 	}; //  /register()
+	
+	$scope.regRequest = function() {
+		$scope.regRequested = true;
+		console.log('Requested');
+	}
 }]);
