@@ -17,7 +17,7 @@ myApp.run(['$rootScope', '$location', 'editableOptions', function($rootScope, $l
 myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
 	// For any unmatched url, redirect to...
-	$urlRouterProvider.otherwise("tlm");
+	$urlRouterProvider.otherwise("login");
 
 	// States
 	$stateProvider
@@ -30,18 +30,13 @@ myApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $
 		templateUrl: 'views/login.html'
 	})
     .state('register', {
-		url: '/invite=a8t7houtbgle3hb5ybgo8iuhoihgiyh84',
-// 		url: '/register',
+// 		url: '/invite=a8t7houtbgle3hb5ybgo8iuhoihgiyh84',
+		url: '/register',
 		resolve: {
 			Authentication: 'Authentication'
 		},
 		controller: 'RegistrationCtrl',
 		templateUrl: 'views/register.html'
-	})	
-    .state('tlm', {
-		url: '/tlm',
-		controller: 'RegistrationCtrl',
-		templateUrl: 'views/tlm.html'
 	})	
     .state('properties', {
 		url: '/properties',

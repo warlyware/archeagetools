@@ -5,11 +5,17 @@
 			<form name="waterform" novalidate ng-submit="register()">
 				<h3 class="text-center">register</h3>
 				<div class="form-group">
-					<!-- Form inputs -->
 					<input class="form-control" type="email" name="email" placeholder="email" autofocus ng-model="user.email" ng-required="true">
 					<input class="form-control" type="password" name="password" placeholder="password" ng-model="user.password" ng-required="true">
 					<input class="form-control" type="text" name="mainChar" placeholder="main character name" ng-model="user.mainChar" ng-required="true">
+					<div>main character race</div>
+					<select ng-model="user.mainRace" ng-options="race for race in races"></select>
+					<div>main character gender</div>
+					<select ng-model="user.mainGender" ng-options="gender for gender in genders"></select>	
 				</div>
+				<div class="form-group">
+
+				</div>					
 				<div class="form-group">
 					<h4 class="text-center">server</h4>
 					<select required class="text-center" id="registrationServer" ng-model="user.server" ng-options="server.name for server in servers"></select>

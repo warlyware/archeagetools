@@ -46,6 +46,8 @@ myApp.factory('Authentication', ['$firebaseAuth', '$rootScope', '$firebaseObject
 				var saveLocation = $firebaseArray(ref); // Create array from ref
 				saveLocation.$add({ // Take character data and add it to array as new record
 					charname: user.mainChar, // Name
+					gender: user.mainGender, // Gender
+					race: user.mainRace, // Race
 					charlvl: 1 // Level
 				}).then(function() {
 					$location.path('/properties');

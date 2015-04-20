@@ -4,16 +4,19 @@
 
 myApp.controller('RegistrationCtrl', ['$scope', '$rootScope', '$timeout', '$firebaseAuth', '$location', '$state', '$stateParams', 'Authentication', 'FIREBASE_URL', function($scope, $rootScope, $timeout, $firebaseAuth, $location, $state, $stateParams, Authentication, FIREBASE_URL) {
 	
+	$scope.races = ['Elf', 'Nuian', 'Firran', 'Harani'];
+	$scope.genders = ['Male', 'Female'];	
+	
+	
 	// [ Variables ]
 	var ref = new Firebase(FIREBASE_URL);
 	var auth = $firebaseAuth(ref);
+	
 	// Registered servers and guilds
 	$scope.servers = [
 		{name: 'Inoch', guilds: [
 			{name: 'Waterdeep'}
-		]},
-		{name: 'Ezi'},
-		{name: 'Ollo'},
+		]}
 	]
 	
 	// [ Functions ]
